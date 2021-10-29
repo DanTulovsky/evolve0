@@ -18,7 +18,7 @@ public class red : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Mapped to BehaviorTree balckboard
+        // Mapped to BehaviorTree blackboard
         // speed = speedStat.Value;
 
     }
