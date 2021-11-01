@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using Kryz.CharacterStats;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class RedAttack : MonoBehaviour
 {
@@ -18,10 +16,10 @@ public class RedAttack : MonoBehaviour
         _attackTarget = target;
     }
 
-    private void Start()
+    private void Awake()
     {
         _gameSettings = GameManager.Instance.gameSettings;
-        attackDistanceStat.BaseValue = _gameSettings.attackDistance;
+        attackDistanceStat.BaseValue = _gameSettings.interactionDistance;
     }
 
     private void Update()
@@ -51,9 +49,9 @@ public class RedAttack : MonoBehaviour
             Debug.LogFormat("[{0}] Hitting {1}", me.behavior, enemy.behavior);
             enemy.TakeDamage(_gameSettings.hitHealthDamage);
 
-            if (enemy is null || enemy.IsDead())
+            if (enemy.IsDead())
             {
-                me.healthStat.BaseValue += _gameSettings.killHealthBonus;
+                me.healthStat.BaseValue += _gameSettings.winHealthImpact;
             }
         }
         else
@@ -65,6 +63,6 @@ public class RedAttack : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(gameObject.transform.position, _gameSettings.attackDistance);
+        Gizmos.DrawWireSphere(gameObject.transform.position, _gameSettings.interactionDistance);
     }
 }

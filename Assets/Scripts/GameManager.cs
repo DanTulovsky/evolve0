@@ -64,7 +64,7 @@ public class GameManager : Singleton<GameManager>
         if (!gameSettings.allowRandomSpawn) return;
 
         Array values = Enum.GetValues(typeof(Behavior));
-        Random random = new Random();
+        Random random = new();
         Behavior randomBehavior = (Behavior)values.GetValue(random.Next(values.Length));
 
         if (_inhabitants.Count < gameSettings.maxInhabitants)
@@ -94,6 +94,16 @@ public class GameManager : Singleton<GameManager>
             SpawnInhabitant(behavior);
             yield return new WaitForSeconds(delay);
         }
+    }
+
+    public void SpawnDove()
+    {
+        Debug.Log("Spawning dove.");
+        SpawnInhabitant(Behavior.Dove);
+    }
+    public void SpawnHawk()
+    {
+        SpawnInhabitant(Behavior.Hawk);
     }
 
     private void Start()

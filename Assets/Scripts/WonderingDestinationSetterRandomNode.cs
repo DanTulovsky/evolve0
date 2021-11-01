@@ -26,7 +26,7 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
     public bool Stopped => _stopped;
 
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         _ai = GetComponent<IAstarAI>();
 

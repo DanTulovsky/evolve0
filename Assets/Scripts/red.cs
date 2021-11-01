@@ -9,7 +9,6 @@ public class Red : MonoBehaviour
 {
     public GameManager.Behavior behavior;
 
-    private bool _inCollision;
     private AIPath _ai;
     private GameSettings _gameSettings;
     private WonderingDestinationSetterRandomNode _dsetter;
@@ -19,7 +18,7 @@ public class Red : MonoBehaviour
     public CharacterStat speedStat;
     public CharacterStat healthStat;
 
-    private void Start()
+    private void Awake()
     {
         // _gameManager = GameManager.Instance;
         _gameSettings = GameManager.Instance.gameSettings;
@@ -39,7 +38,7 @@ public class Red : MonoBehaviour
         var nearBy = new List<Collider2D>(Physics2D.OverlapCircleAll(
             transform.position,
             // Attack method checks distance between center points
-            _gameSettings.attackDistance / 2,
+            _gameSettings.interactionDistance / 2,
             _gameSettings.whatIsEnemies));
         if (nearBy.Contains(selfCollider))
         {
@@ -56,10 +55,10 @@ public class Red : MonoBehaviour
             switch (behavior)
             {
                 case GameManager.Behavior.Dove:
-                    RunAwayFrom(randomEnemy);
+                    DoveHandler(randomEnemy);
                     break;
                 case GameManager.Behavior.Hawk:
-                    Attack(randomEnemy);
+                    HawkHandler(randomEnemy);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -70,6 +69,55 @@ public class Red : MonoBehaviour
             _dsetter.StartMoving();
             _runningAway = false;
         }
+    }
+
+    private void HawkHandler(GameObject other)
+    {
+        switch (other.GetComponent<Red>().behavior)
+        {
+            default:
+                if (healthStat.Value <= _gameSettings.runAwayAtHealth)
+                {
+                    RunAwayFrom(other);
+                }
+                else
+                {
+                    Attack(other);
+                }
+
+                break;
+        }
+    }
+
+    private void DoveHandler(GameObject other)
+    {
+        switch (other.GetComponent<Red>().behavior)
+        {
+            case GameManager.Behavior.Hawk:
+                RunAwayFrom(other);
+                break;
+            case GameManager.Behavior.Dove:
+                // Small chance of running away instead
+                if (Random.Range(0, 1) < _gameSettings.postureEndChance)
+                {
+                    RunAwayFrom(other);
+                }
+                else
+                {
+                    Posture(other);
+                }
+
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    // Don't fight, but posture until someone backs down
+    private void Posture(GameObject other)
+    {
+        _dsetter.StopMoving(transform.position);
+        GetComponent<RedPosture>().SetTarget(other);
     }
 
     public bool IsDead()
@@ -87,7 +135,6 @@ public class Red : MonoBehaviour
         // Debug.LogFormat("[{0}] Attacking: {1}", behavior, other.gameObject.GetComponent<Red>().behavior);
         _dsetter.StopMoving(transform.position);
 
-
         GetComponent<RedAttack>().SetTarget(other);
     }
 
@@ -100,7 +147,7 @@ public class Red : MonoBehaviour
         // Debug.LogFormat("[{0}] Running away from: {1}", behavior, other.gameObject.GetComponent<Red>().behavior);
         _dsetter.SetRandomPointAwayFrom(transform, other.transform);
 
-        healthStat.BaseValue += _gameSettings.runAwayHealthBonus;
+        healthStat.BaseValue += _gameSettings.loseHealthImpact;
     }
 
     public void TakeDamage(float damage)
