@@ -1,21 +1,32 @@
-using System.Collections;
 using Pathfinding;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WonderingDestinationSetterRandomNode : MonoBehaviour
 {
     IAstarAI _ai;
     public GameObject destinationPrefab;
     private GameObject _destination;
-    SpriteRenderer _destinationSpriteRenderer;
 
-    GraphNode _randomNode;
+    private SpriteRenderer _destinationSpriteRenderer;
+
+    // Remaining distance to the destination
+    private float _lastPathRemainingDistance;
+
+    // Time at which the above distance was calculated
+    private float _lastPathRemainingDistanceTime;
+
+    // How long it's ok to remain in the same place without progress
+    private float _lastPathStoppedToleranceTime;
+
+    private GraphNode _randomNode;
     private bool _stopped;
+    private bool _stuck;
 
     public bool Stopped => _stopped;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _ai = GetComponent<IAstarAI>();
 
@@ -23,9 +34,18 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
 
         _destinationSpriteRenderer = _destination.GetComponent<SpriteRenderer>();
         _destinationSpriteRenderer.color = GetComponent<SpriteRenderer>().color;
+
+        _lastPathRemainingDistanceTime = Time.time;
+        _lastPathRemainingDistance = float.MaxValue;
+        _lastPathStoppedToleranceTime = 2.0f;
     }
 
-    Vector3 PickRandomPoint()
+    private void OnDestroy()
+    {
+        Destroy(_destination);
+    }
+
+    private Vector3 PickRandomPoint()
     {
         GridGraph grid = AstarPath.active.data.gridGraph;
 
@@ -53,7 +73,7 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
     public void SetRandomPointAwayFrom(Transform me, Transform other)
     {
         GraphNode node = PickNodeAwayFrom(me, other);
-        
+
         Vector3 point = (Vector3)node.position;
         _destination.transform.position = point;
 
@@ -63,6 +83,8 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
 
     public void StopMoving(Vector3 stopPosition)
     {
+        if (_stopped) return;
+
         _stopped = true;
         _destination.transform.position = stopPosition;
         _ai.destination = stopPosition;
@@ -94,14 +116,48 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
         return node;
     }
 
+    private bool movementProgressMade()
+    {
+        // Haven't reach the end, and we have a path
+        if (!_ai.reachedEndOfPath && _ai.hasPath && _ai.remainingDistance != float.PositiveInfinity)
+        {
+            if (_ai.remainingDistance < _lastPathRemainingDistance)
+            {
+                // We made progress, do nothing
+                _lastPathRemainingDistance = _ai.remainingDistance;
+                _lastPathRemainingDistanceTime = Time.time;
+                return true;
+            }
+            else
+            {
+                if (Time.time - _lastPathRemainingDistanceTime > _lastPathStoppedToleranceTime)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        if (_ai.pathPending) return;
+
+        // check if we've made any progress
+        if (!movementProgressMade())
+        {
+            _stuck = true;
+        }
+
         // Update the destination of the AI if
         // the AI is not already calculating a path and
         // the ai has reached the end of the path or it has no path at all
-        if (_ai.pathPending || (!_ai.reachedEndOfPath && _ai.hasPath)) return;
+        if (!_ai.reachedEndOfPath && _ai.hasPath)
+        {
+            if (!_stuck) return;
+        }
 
         if (!_stopped)
         {
@@ -109,5 +165,8 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
         }
 
         _ai.SearchPath();
+        _stuck = false;
+        _lastPathRemainingDistanceTime = Time.time;
+        _lastPathRemainingDistance = float.MaxValue;
     }
 }

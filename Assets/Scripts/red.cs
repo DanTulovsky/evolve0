@@ -1,117 +1,110 @@
 using System;
+using System.Collections.Generic;
 using Kryz.CharacterStats;
 using Pathfinding;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 public class Red : MonoBehaviour
 {
     public GameManager.Behavior behavior;
 
-    private const string BirdTag = "bird";
     private bool _inCollision;
-    private GameManager _gameManager;
     private AIPath _ai;
+    private GameSettings _gameSettings;
+    private WonderingDestinationSetterRandomNode _dsetter;
+    private bool _runningAway;
+
 
     public CharacterStat speedStat;
-    [SerializeField] private CharacterStat _attackDistanceStat;
-    [SerializeField] private CharacterStat _healthStat;
+    public CharacterStat healthStat;
 
     private void Start()
     {
-        _gameManager = GameManager.Instance;
+        // _gameManager = GameManager.Instance;
+        _gameSettings = GameManager.Instance.gameSettings;
         _ai = GetComponent<AIPath>();
-        _healthStat.BaseValue = GameSettings.BaseHealth;
-        _attackDistanceStat.BaseValue = GameSettings.AttackDistance;
+        _dsetter = GetComponent<WonderingDestinationSetterRandomNode>();
+        healthStat.BaseValue = _gameSettings.baseHealth;
     }
 
     private void Update()
     {
         _ai.maxSpeed = speedStat.Value;
+
+        // Check for collisions
+        Collider2D selfCollider = GetComponent<Collider2D>();
+
+        // ReSharper disable once Unity.PreferNonAllocApi
+        var nearBy = new List<Collider2D>(Physics2D.OverlapCircleAll(
+            transform.position,
+            // Attack method checks distance between center points
+            _gameSettings.attackDistance / 2,
+            _gameSettings.whatIsEnemies));
+        if (nearBy.Contains(selfCollider))
+        {
+            nearBy.Remove(selfCollider);
+        }
+
+        // Debug.LogFormat("[{0}] Enemies in range: {1}", behavior, nearBy.Count);
+
+        if (nearBy.Count > 0)
+        {
+            // Focus on one enemy
+            GameObject randomEnemy = nearBy[Random.Range(0, nearBy.Count - 1)].gameObject;
+
+            switch (behavior)
+            {
+                case GameManager.Behavior.Dove:
+                    RunAwayFrom(randomEnemy);
+                    break;
+                case GameManager.Behavior.Hawk:
+                    Attack(randomEnemy);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        else
+        {
+            _dsetter.StartMoving();
+            _runningAway = false;
+        }
     }
 
     public bool IsDead()
     {
-        return _healthStat.Value <= 0;
-    }
-    
-    private void ProcessCollisionEnter(GameObject other)
-    {
-        switch (behavior)
-        {
-            case GameManager.Behavior.Dove:
-                RunAwayFrom(other);
-                break;
-            case GameManager.Behavior.Hawk:
-                Attack(other);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+        return healthStat.Value <= 0;
     }
 
-    private void Hit(GameObject other)
+    public bool CanReproduce()
     {
-        Red enemy = other.GetComponent<Red>();
-        
-        // check how far it is and attack if close enough
-        float distance = Vector3.Distance(transform.position, other.transform.position);
-        if (distance <= _attackDistanceStat.Value)
-        {
-            Debug.LogFormat("[{0}] Hitting {1}", behavior, enemy.behavior);
-
-            // TODO: implement this better
-            enemy._healthStat.BaseValue += GameSettings.HitHealthDamage;
-            if (enemy.IsDead())
-            {
-                _healthStat.BaseValue += GameSettings.KillHealthBonus;
-            }
-        }
-
+        return healthStat.Value >= _gameSettings.reproduceAtHealth;
     }
 
     private void Attack(GameObject other)
     {
-        // TODO: This should be an interface.
-        WonderingDestinationSetterRandomNode dsetter = GetComponent<WonderingDestinationSetterRandomNode>();
+        // Debug.LogFormat("[{0}] Attacking: {1}", behavior, other.gameObject.GetComponent<Red>().behavior);
+        _dsetter.StopMoving(transform.position);
 
-        Debug.LogFormat("[{0}] Attacking: {1}", behavior, other.gameObject.GetComponent<Red>().behavior);
-        dsetter.StopMoving(transform.position);
 
-        Hit(other);
+        GetComponent<RedAttack>().SetTarget(other);
     }
 
     private void RunAwayFrom(GameObject other)
     {
-        // TODO: This should be an interface.
-        WonderingDestinationSetterRandomNode dsetter = GetComponent<WonderingDestinationSetterRandomNode>();
+        if (_runningAway) return;
 
-        Debug.LogFormat("[{0}] Running away from: {1}", behavior, other.gameObject.GetComponent<Red>().behavior);
-        dsetter.SetRandomPointAwayFrom(transform, other.transform);
+        _runningAway = true;
+
+        // Debug.LogFormat("[{0}] Running away from: {1}", behavior, other.gameObject.GetComponent<Red>().behavior);
+        _dsetter.SetRandomPointAwayFrom(transform, other.transform);
+
+        healthStat.BaseValue += _gameSettings.runAwayHealthBonus;
     }
 
-    private void OnCollisionExit2D(Collision2D other)
+    public void TakeDamage(float damage)
     {
-        WonderingDestinationSetterRandomNode dsetter = GetComponent<WonderingDestinationSetterRandomNode>();
-        if (dsetter.Stopped)
-        {
-            Debug.Log("Collision over, moving again.");
-            dsetter.StartMoving();
-        }
-
-        _inCollision = false;
-    }
-
-    private void OnCollisionStay2D(Collision2D other)
-    {
-        if (_inCollision) return;
-
-        if (other.gameObject.CompareTag(BirdTag))
-        {
-            _inCollision = true;
-            ProcessCollisionEnter(other.gameObject);
-            // Debug.LogFormat("Met other bird: {0}", other.gameObject.GetComponent<Red>().behavior);
-        }
+        healthStat.BaseValue += damage;
     }
 }

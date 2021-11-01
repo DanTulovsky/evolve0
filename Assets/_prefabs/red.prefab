@@ -17,7 +17,8 @@ GameObject:
   - component: {fileID: 1028668966021862362}
   - component: {fileID: 260521295}
   - component: {fileID: 1488204903}
-  m_Layer: 0
+  - component: {fileID: 5487167622328270936}
+  m_Layer: 3
   m_Name: red
   m_TagString: bird
   m_Icon: {fileID: 0}
@@ -123,9 +124,7 @@ MonoBehaviour:
   speedStat:
     BaseValue: 3
   healthStat:
-    BaseValue: 50
-  attackDistanceStat:
-    BaseValue: 1
+    BaseValue: 0
 --- !u!114 &237278472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,7 +171,7 @@ MonoBehaviour:
   repathRate: 0.5
   canSearch: 1
   canMove: 1
-  maxSpeed: 5
+  maxSpeed: 2
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -189,7 +188,7 @@ MonoBehaviour:
   alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
-  constrainInsideGraph: 0
+  constrainInsideGraph: 1
 --- !u!50 &1028668966021862362
 Rigidbody2D:
   serializedVersion: 4
@@ -231,7 +230,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1639925474728830599}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77f586f285b3847808d79083bd19ef1f, type: 3}
   m_Name: 
@@ -239,3 +238,18 @@ MonoBehaviour:
   version: 1
   unwrap: 1
   splitAtEveryPortal: 0
+--- !u!114 &5487167622328270936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639925474728830599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7956b630315f942a1aee80b786f69651, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDistanceStat:
+    BaseValue: 0
+  startTimeBtwAttack: 0.3
