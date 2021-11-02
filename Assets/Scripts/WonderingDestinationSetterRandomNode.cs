@@ -4,9 +4,12 @@ using Random = UnityEngine.Random;
 
 public class WonderingDestinationSetterRandomNode : MonoBehaviour
 {
-    IAstarAI _ai;
+    private IAstarAI _ai;
+
     public GameObject destinationPrefab;
-    private GameObject _destination;
+
+    // The wondering destination object
+    private GameObject _wonderingDestination;
 
     private SpriteRenderer _destinationSpriteRenderer;
 
@@ -20,19 +23,17 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
     private float _lastPathStoppedToleranceTime;
 
     private GraphNode _randomNode;
-    private bool _stopped;
     private bool _stuck;
 
-    public bool Stopped => _stopped;
 
     // Start is called before the first frame update
     private void Start()
     {
         _ai = GetComponent<IAstarAI>();
 
-        _destination = Instantiate(destinationPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        _wonderingDestination = Instantiate(destinationPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
-        _destinationSpriteRenderer = _destination.GetComponent<SpriteRenderer>();
+        _destinationSpriteRenderer = _wonderingDestination.GetComponent<SpriteRenderer>();
         _destinationSpriteRenderer.color = GetComponent<SpriteRenderer>().color;
 
         _lastPathRemainingDistanceTime = Time.time;
@@ -42,7 +43,7 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
 
     private void OnDestroy()
     {
-        Destroy(_destination);
+        Destroy(_wonderingDestination);
     }
 
     private Vector3 PickRandomPoint()
@@ -65,8 +66,13 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
         }
 
         Vector3 point = (Vector3)_randomNode.position;
-        _destination.transform.position = point;
+        _wonderingDestination.transform.position = point;
         return point;
+    }
+
+    public void SetDestination(GameObject destination)
+    {
+        _ai.destination = _wonderingDestination.transform.position;
     }
 
     // Set the destination in a direction away from other
@@ -75,24 +81,15 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
         GraphNode node = PickNodeAwayFrom(me, other);
 
         Vector3 point = (Vector3)node.position;
-        _destination.transform.position = point;
+        _wonderingDestination.transform.position = point;
 
         _ai.destination = point;
         _ai.SearchPath();
     }
 
-    public void StopMoving(Vector3 stopPosition)
-    {
-        if (_stopped) return;
-
-        _stopped = true;
-        _destination.transform.position = stopPosition;
-        _ai.destination = stopPosition;
-    }
-
     public void StartMoving()
     {
-        _stopped = false;
+        _ai.destination = _wonderingDestination.transform.position;
     }
 
     private GraphNode PickNodeAwayFrom(Transform me, Transform other)
@@ -116,10 +113,10 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
         return node;
     }
 
-    private bool movementProgressMade()
+    private bool MovementProgressMade()
     {
         // Haven't reach the end, and we have a path
-        if (!_ai.reachedEndOfPath && _ai.hasPath && _ai.remainingDistance != float.PositiveInfinity)
+        if (!_ai.reachedEndOfPath && _ai.hasPath && !float.IsPositiveInfinity(_ai.remainingDistance))
         {
             if (_ai.remainingDistance < _lastPathRemainingDistance)
             {
@@ -146,7 +143,7 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
         if (_ai.pathPending) return;
 
         // check if we've made any progress
-        if (!movementProgressMade())
+        if (!MovementProgressMade())
         {
             _stuck = true;
         }
@@ -159,10 +156,7 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
             if (!_stuck) return;
         }
 
-        if (!_stopped)
-        {
-            _ai.destination = PickRandomPoint();
-        }
+        _ai.destination = PickRandomPoint();
 
         _ai.SearchPath();
         _stuck = false;

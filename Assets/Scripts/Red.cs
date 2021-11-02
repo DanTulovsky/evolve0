@@ -116,7 +116,7 @@ public class Red : MonoBehaviour
     // Don't fight, but posture until someone backs down
     private void Posture(GameObject other)
     {
-        _dsetter.StopMoving(transform.position);
+        _dsetter.SetDestination(other);
         GetComponent<RedPosture>().SetTarget(other);
     }
 
@@ -133,8 +133,9 @@ public class Red : MonoBehaviour
     private void Attack(GameObject other)
     {
         // Debug.LogFormat("[{0}] Attacking: {1}", behavior, other.gameObject.GetComponent<Red>().behavior);
-        _dsetter.StopMoving(transform.position);
-
+        // Set as movement destination
+        _dsetter.SetDestination(other);
+        // And as attack target
         GetComponent<RedAttack>().SetTarget(other);
     }
 
