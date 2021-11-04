@@ -13,13 +13,13 @@ public class RedPosture : MonoBehaviour
     public float startTimeBtwPosture = 0.3f;
     [SerializeField] private GameObject postureTarget;
     private static readonly int OutlineEnabled = Shader.PropertyToID("_OutlineEnabled");
-    private WonderingDestinationSetterRandomNode _dsetter;
+    private MoveObject moveObject;
 
     private void Awake()
     {
-        _dsetter = GetComponent<WonderingDestinationSetterRandomNode>();
+        moveObject = GetComponent<MoveObject>();
         rend = GetComponent<Renderer>();
-        rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
+        rend.material.SetFloat(OutlineEnabled, 0);
     }
 
     public void SetTarget(GameObject target)
@@ -27,8 +27,8 @@ public class RedPosture : MonoBehaviour
         if (postureTarget != null) return;
 
         postureTarget = target;
-        _dsetter.SetDestination(target);
-        rend.sharedMaterial.SetFloat(OutlineEnabled, 1);
+        moveObject.SetDestination(target);
+        rend.material.SetFloat(OutlineEnabled, 1);
     }
 
     public GameObject GetPostureTarget()
@@ -51,7 +51,7 @@ public class RedPosture : MonoBehaviour
         {
             // Enemy ran away or died, we win
             postureTarget = null;
-            rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
+            rend.material.SetFloat(OutlineEnabled, 0);
 
             me.healthStat.BaseValue += _gameSettings.winHealthImpact;
             // But we wasted time

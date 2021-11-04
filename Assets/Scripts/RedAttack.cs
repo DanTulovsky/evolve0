@@ -12,29 +12,29 @@ public class RedAttack : MonoBehaviour
     public float startTimeBtwAttack = 0.3f;
     [SerializeField] private GameObject attackTarget;
     private static readonly int OutlineEnabled = Shader.PropertyToID("_OutlineEnabled");
-    private WonderingDestinationSetterRandomNode _dsetter;
+    private MoveObject moveObject;
+
+    private void Awake()
+    {
+        _gameSettings = GameManager.Instance.gameSettings;
+        moveObject = GetComponent<MoveObject>();
+        attackDistanceStat.BaseValue = _gameSettings.interactionDistance;
+        rend = GetComponent<Renderer>();
+        rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
+    }
 
     public void SetTarget(GameObject target)
     {
         if (attackTarget != null) return;
 
         attackTarget = target;
-        _dsetter.SetDestination(target);
+        moveObject.SetDestination(target);
         rend.sharedMaterial.SetFloat(OutlineEnabled, 1);
     }
 
     public GameObject GetAttackTarget()
     {
         return attackTarget;
-    }
-
-    private void Awake()
-    {
-        _gameSettings = GameManager.Instance.gameSettings;
-        _dsetter = GetComponent<WonderingDestinationSetterRandomNode>();
-        attackDistanceStat.BaseValue = _gameSettings.interactionDistance;
-        rend = GetComponent<Renderer>();
-        rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
     }
 
     private void Update()

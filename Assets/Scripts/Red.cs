@@ -58,15 +58,13 @@ public class Red : MonoBehaviour
         }
         else
         {
-            GoCommand command = new(moveObject);
-            ExecuteNewCommand(command);
-            // _dsetter.StartMoving();
+            ExecuteNewCommand(new GoCommand(moveObject));
             _runningAway = false;
         }
     }
 
     //Will execute the command and do stuff to the list to make the replay, undo, redo system work
-    private void ExecuteNewCommand(Command command)
+    private static void ExecuteNewCommand(Command command)
     {
         command.Execute();
 
@@ -139,7 +137,7 @@ public class Red : MonoBehaviour
     // Don't fight, but posture until someone backs down
     private void Posture(GameObject other)
     {
-        // Sets attack target and movement destination
+        // Sets posture target and movement destination
         GetComponent<RedPosture>().SetTarget(other);
     }
 
@@ -171,9 +169,7 @@ public class Red : MonoBehaviour
 
         _runningAway = true;
 
-        RunAwayCommand command = new(moveObject, other);
-        ExecuteNewCommand(command);
-        // _dsetter.SetRandomPointAwayFrom(transform, other.transform);
+        ExecuteNewCommand(new RunAwayCommand(moveObject, other));
 
         healthStat.BaseValue += _gameSettings.loseHealthImpact;
     }

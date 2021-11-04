@@ -3,11 +3,12 @@
     public class RunAwayCommand : Command
     {
         private readonly MoveObject moveObject;
-        private GameObject otherObject;
+        private readonly GameObject otherObject;
 
         public RunAwayCommand(MoveObject moveObject, GameObject otherObject)
         {
             this.moveObject = moveObject;
+            this.otherObject = otherObject;
         }
         public override void Execute()
         {
