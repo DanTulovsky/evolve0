@@ -11,18 +11,24 @@ public class Red : MonoBehaviour
 
     private AIPath _ai;
     private GameSettings _gameSettings;
-    private WonderingDestinationSetterRandomNode _dsetter;
+
     private bool _runningAway;
+
+    // Allows this object to move in the world
+    private MoveObject moveObject;
 
     public CharacterStat speedStat;
     public CharacterStat healthStat;
+
+    private Command setDestination;
+    private Command stop;
 
     private void Awake()
     {
         // _gameManager = GameManager.Instance;
         _gameSettings = GameManager.Instance.gameSettings;
         _ai = GetComponent<AIPath>();
-        _dsetter = GetComponent<WonderingDestinationSetterRandomNode>();
+        moveObject = gameObject.AddComponent<MoveObject>();
         healthStat.BaseValue = _gameSettings.baseHealth;
     }
 
@@ -30,21 +36,7 @@ public class Red : MonoBehaviour
     {
         _ai.maxSpeed = speedStat.Value;
 
-        // Check for collisions
-        Collider2D selfCollider = GetComponent<Collider2D>();
-
-        // ReSharper disable once Unity.PreferNonAllocApi
-        var nearBy = new List<Collider2D>(Physics2D.OverlapCircleAll(
-            transform.position,
-            // Attack method checks distance between center points
-            _gameSettings.interactionDistance / 2,
-            _gameSettings.whatIsEnemies));
-        if (nearBy.Contains(selfCollider))
-        {
-            nearBy.Remove(selfCollider);
-        }
-
-        // Debug.LogFormat("[{0}] Enemies in range: {1}", behavior, nearBy.Count);
+        var nearBy = GetNearby();
 
         if (nearBy.Count > 0)
         {
@@ -66,9 +58,43 @@ public class Red : MonoBehaviour
         }
         else
         {
-            _dsetter.StartMoving();
+            GoCommand command = new(moveObject);
+            ExecuteNewCommand(command);
+            // _dsetter.StartMoving();
             _runningAway = false;
         }
+    }
+
+    //Will execute the command and do stuff to the list to make the replay, undo, redo system work
+    private void ExecuteNewCommand(Command command)
+    {
+        command.Execute();
+
+        //Add the new command to the last position in the list
+        // undoCommands.Push(commandButton);
+
+        //Remove all redo commands because redo is not defined when we have add a new command
+        // redoCommands.Clear();
+    }
+
+    private List<Collider2D> GetNearby()
+    {
+        // Check for collisions
+        Collider2D selfCollider = GetComponent<Collider2D>();
+
+        // ReSharper disable once Unity.PreferNonAllocApi
+        var nearBy = new List<Collider2D>(Physics2D.OverlapCircleAll(
+            transform.position,
+            // Attack method checks distance between center points
+            _gameSettings.interactionDistance / 2,
+            _gameSettings.whatIsEnemies));
+
+        if (nearBy.Contains(selfCollider))
+        {
+            nearBy.Remove(selfCollider);
+        }
+
+        return nearBy;
     }
 
     private void HawkHandler(GameObject other)
@@ -113,6 +139,7 @@ public class Red : MonoBehaviour
     // Don't fight, but posture until someone backs down
     private void Posture(GameObject other)
     {
+        // Sets attack target and movement destination
         GetComponent<RedPosture>().SetTarget(other);
     }
 
@@ -128,7 +155,8 @@ public class Red : MonoBehaviour
 
     public bool HasTarget()
     {
-        return GetComponent<RedAttack>().GetAttackTarget() != null || GetComponent<RedPosture>().GetPostureTarget() != null;
+        return GetComponent<RedAttack>().GetAttackTarget() != null ||
+               GetComponent<RedPosture>().GetPostureTarget() != null;
     }
 
     private void Attack(GameObject other)
@@ -143,7 +171,9 @@ public class Red : MonoBehaviour
 
         _runningAway = true;
 
-        _dsetter.SetRandomPointAwayFrom(transform, other.transform);
+        RunAwayCommand command = new(moveObject, other);
+        ExecuteNewCommand(command);
+        // _dsetter.SetRandomPointAwayFrom(transform, other.transform);
 
         healthStat.BaseValue += _gameSettings.loseHealthImpact;
     }

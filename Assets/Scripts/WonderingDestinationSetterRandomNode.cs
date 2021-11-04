@@ -6,10 +6,8 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
 {
     private IAstarAI _ai;
 
-    public GameObject destinationPrefab;
-
     // The wondering destination object
-    private GameObject _wonderingDestination;
+    private Vector3 _wonderingDestination;
 
     private SpriteRenderer _destinationSpriteRenderer;
 
@@ -32,19 +30,14 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
     {
         _ai = GetComponent<IAstarAI>();
 
-        _wonderingDestination = Instantiate(destinationPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        _wonderingDestination = new Vector3(0, 0, 0);
 
-        _destinationSpriteRenderer = _wonderingDestination.GetComponent<SpriteRenderer>();
-        _destinationSpriteRenderer.color = GetComponent<SpriteRenderer>().color;
+        // _destinationSpriteRenderer = _wonderingDestination.GetComponent<SpriteRenderer>();
+        // _destinationSpriteRenderer.color = GetComponent<SpriteRenderer>().color;
 
         _lastPathRemainingDistanceTime = Time.time;
         _lastPathRemainingDistance = float.MaxValue;
         _lastPathStoppedToleranceTime = 2.0f;
-    }
-
-    private void OnDestroy()
-    {
-        Destroy(_wonderingDestination);
     }
 
     private Vector3 PickRandomPoint()
@@ -67,7 +60,7 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
         }
 
         Vector3 point = (Vector3)_randomNode.position;
-        _wonderingDestination.transform.position = point;
+        _wonderingDestination = point;
         return point;
     }
 
@@ -77,12 +70,12 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
     }
 
     // Set the destination in a direction away from other
-    public void SetRandomPointAwayFrom(Transform me, Transform other)
+    public void SetRandomPointAwayFrom(GameObject other)
     {
-        GraphNode node = PickNodeAwayFrom(me, other);
+        GraphNode node = PickNodeAwayFrom(gameObject.transform, other.transform);
 
         Vector3 point = (Vector3)node.position;
-        _wonderingDestination.transform.position = point;
+        _wonderingDestination = point;
 
         _ai.destination = point;
         _ai.SearchPath();
@@ -90,7 +83,13 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
 
     public void StartMoving()
     {
-        _ai.destination = _wonderingDestination.transform.position;
+        _ai.canMove = true;
+        _ai.destination = _wonderingDestination;
+    }
+
+    public void StopMoving()
+    {
+        _ai.canMove = false;
     }
 
     private GraphNode PickNodeAwayFrom(Transform me, Transform other)
