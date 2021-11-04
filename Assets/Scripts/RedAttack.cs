@@ -4,26 +4,37 @@ using UnityEngine;
 public class RedAttack : MonoBehaviour
 {
     private float _timeBtwAttack;
-    private  GameSettings _gameSettings;
+    private GameSettings _gameSettings;
+    private Renderer rend;
     [SerializeField] private CharacterStat attackDistanceStat;
 
     // Can attack every <value> seconds
     public float startTimeBtwAttack = 0.3f;
     [SerializeField] private GameObject attackTarget;
+    private static readonly int OutlineEnabled = Shader.PropertyToID("_OutlineEnabled");
+    private WonderingDestinationSetterRandomNode _dsetter;
 
     public void SetTarget(GameObject target)
     {
+        if (attackTarget != null) return;
+
         attackTarget = target;
+        _dsetter.SetDestination(target);
+        rend.sharedMaterial.SetFloat(OutlineEnabled, 1);
     }
 
-    public GameObject AttackTarget()
+    public GameObject GetAttackTarget()
     {
         return attackTarget;
     }
+
     private void Awake()
     {
         _gameSettings = GameManager.Instance.gameSettings;
+        _dsetter = GetComponent<WonderingDestinationSetterRandomNode>();
         attackDistanceStat.BaseValue = _gameSettings.interactionDistance;
+        rend = GetComponent<Renderer>();
+        rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
     }
 
     private void Update()
@@ -61,6 +72,7 @@ public class RedAttack : MonoBehaviour
         else
         {
             attackTarget = null;
+            rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
         }
     }
 

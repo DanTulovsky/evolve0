@@ -14,7 +14,6 @@ public class Red : MonoBehaviour
     private WonderingDestinationSetterRandomNode _dsetter;
     private bool _runningAway;
 
-
     public CharacterStat speedStat;
     public CharacterStat healthStat;
 
@@ -52,6 +51,7 @@ public class Red : MonoBehaviour
             // Focus on one enemy
             GameObject randomEnemy = nearBy[Random.Range(0, nearBy.Count - 1)].gameObject;
 
+            // TODO: After attack/posture, don't start a new one for a short time to allow leaving the scene.
             switch (behavior)
             {
                 case GameManager.Behavior.Dove:
@@ -78,7 +78,9 @@ public class Red : MonoBehaviour
             default:
                 if (healthStat.Value <= _gameSettings.runAwayAtHealth)
                 {
-                    RunAwayFrom(other);
+                    // Keep attacking the same target if you have one
+                    GameObject currentAttackTarget = GetComponent<RedAttack>().GetAttackTarget();
+                    RunAwayFrom(currentAttackTarget != null ? currentAttackTarget : other);
                 }
                 else
                 {
@@ -94,18 +96,13 @@ public class Red : MonoBehaviour
         switch (other.GetComponent<Red>().behavior)
         {
             case GameManager.Behavior.Hawk:
+                // Runs away even if currently posturing
                 RunAwayFrom(other);
                 break;
             case GameManager.Behavior.Dove:
-                // Small chance of running away instead
-                if (Random.Range(0f, 1f) < _gameSettings.postureEndChance)
-                {
-                    RunAwayFrom(other);
-                }
-                else
-                {
-                    Posture(other);
-                }
+                // Keep posturing with the same target if you have one
+                GameObject currentPostureTarget = GetComponent<RedPosture>().GetPostureTarget();
+                Posture(currentPostureTarget != null ? currentPostureTarget : other);
 
                 break;
             default:
@@ -116,7 +113,6 @@ public class Red : MonoBehaviour
     // Don't fight, but posture until someone backs down
     private void Posture(GameObject other)
     {
-        _dsetter.SetDestination(other);
         GetComponent<RedPosture>().SetTarget(other);
     }
 
@@ -132,25 +128,21 @@ public class Red : MonoBehaviour
 
     public bool HasTarget()
     {
-        return GetComponent<RedAttack>().AttackTarget() != null;
+        return GetComponent<RedAttack>().GetAttackTarget() != null || GetComponent<RedPosture>().GetPostureTarget() != null;
     }
 
     private void Attack(GameObject other)
     {
-        // Debug.LogFormat("[{0}] Attacking: {1}", behavior, other.gameObject.GetComponent<Red>().behavior);
-        // Set as movement destination
-        _dsetter.SetDestination(other);
-        // And as attack target
+        // Sets attack target and movement destination
         GetComponent<RedAttack>().SetTarget(other);
     }
 
-    private void RunAwayFrom(GameObject other)
+    public void RunAwayFrom(GameObject other)
     {
         if (_runningAway) return;
 
         _runningAway = true;
 
-        // Debug.LogFormat("[{0}] Running away from: {1}", behavior, other.gameObject.GetComponent<Red>().behavior);
         _dsetter.SetRandomPointAwayFrom(transform, other.transform);
 
         healthStat.BaseValue += _gameSettings.loseHealthImpact;

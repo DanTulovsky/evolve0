@@ -61,7 +61,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8e8d509126fee408fa225e71f68fd479, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -224,6 +224,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destinationPrefab: {fileID: 2350431969865414766, guid: 7c166e8e0617d4172b05134b199e3a03, type: 3}
+  stuck: 0
+  stuckTime: 0
 --- !u!114 &1488204903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +256,7 @@ MonoBehaviour:
   attackDistanceStat:
     BaseValue: 0
   startTimeBtwAttack: 0.3
+  attackTarget: {fileID: 0}
 --- !u!114 &-5445514228051342791
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.UI;
 using Random = System.Random;
 
 public class GameManager : Singleton<GameManager>
@@ -66,7 +64,6 @@ public class GameManager : Singleton<GameManager>
 
     private void SpawnRandomInhabitant()
     {
-        Debug.Log("spawn random");
         if (_initialSpawn) return;
         if (!gameSettings.allowRandomSpawn) return;
 

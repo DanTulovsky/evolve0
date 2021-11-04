@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Kryz.CharacterStats;
 using UnityEngine;
 
@@ -6,19 +7,37 @@ public class RedPosture : MonoBehaviour
     private float _timeBtwPosture;
     private GameSettings _gameSettings;
     [SerializeField] private CharacterStat postureDistanceStat;
+    private Renderer rend;
 
     // Can attack every <value> seconds
     public float startTimeBtwPosture = 0.3f;
-    private GameObject _postureTarget;
+    [SerializeField] private GameObject postureTarget;
+    private static readonly int OutlineEnabled = Shader.PropertyToID("_OutlineEnabled");
+    private WonderingDestinationSetterRandomNode _dsetter;
+
+    private void Awake()
+    {
+        _dsetter = GetComponent<WonderingDestinationSetterRandomNode>();
+        rend = GetComponent<Renderer>();
+        rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
+    }
 
     public void SetTarget(GameObject target)
     {
-        _postureTarget = target;
+        if (postureTarget != null) return;
+
+        postureTarget = target;
+        _dsetter.SetDestination(target);
+        rend.sharedMaterial.SetFloat(OutlineEnabled, 1);
     }
 
-    private void Posture(GameObject other)
+    public GameObject GetPostureTarget()
     {
-        
+        return postureTarget;
+    }
+
+    private void Posture([NotNull] GameObject other)
+    {
         Red me = GetComponent<Red>();
         Red enemy = other.GetComponent<Red>();
 
@@ -31,7 +50,9 @@ public class RedPosture : MonoBehaviour
         else
         {
             // Enemy ran away or died, we win
-            _postureTarget = null;
+            postureTarget = null;
+            rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
+
             me.healthStat.BaseValue += _gameSettings.winHealthImpact;
             // But we wasted time
             me.healthStat.BaseValue += _gameSettings.timeWasteHealthImpact;
@@ -47,11 +68,21 @@ public class RedPosture : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (_postureTarget == null) return;
+        if (postureTarget == null) return;
 
         if (_timeBtwPosture <= 0)
         {
-            Posture(_postureTarget);
+            // small chance to stop posturing
+
+            if (Random.Range(0f, 1f) < _gameSettings.postureEndChance)
+            {
+                Debug.Log("Had enough posturing!");
+                GetComponent<Red>().RunAwayFrom(postureTarget);
+                postureTarget = null;
+                return;
+            }
+
+            Posture(postureTarget);
             _timeBtwPosture = startTimeBtwPosture;
         }
         else
