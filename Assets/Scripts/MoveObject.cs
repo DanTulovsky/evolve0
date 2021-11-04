@@ -8,9 +8,6 @@ public class MoveObject : MonoBehaviour
 {
     private IAstarAI _ai;
 
-    // The wondering destination object
-    private Vector3 _wonderingDestination;
-
     // Remaining distance to the destination
     private float _lastPathRemainingDistance;
 
@@ -30,8 +27,6 @@ public class MoveObject : MonoBehaviour
     {
         _ai = GetComponent<IAstarAI>();
 
-        _wonderingDestination = new Vector3(0, 0, 0);
-
         _lastPathRemainingDistanceTime = Time.time;
         _lastPathRemainingDistance = float.MaxValue;
         _lastPathStoppedToleranceTime = 2.0f;
@@ -50,7 +45,6 @@ public class MoveObject : MonoBehaviour
         GraphNode node = PickNodeAwayFrom(gameObject.transform, other.transform);
 
         Vector3 point = (Vector3)node.position;
-        _wonderingDestination = point;
 
         _ai.destination = point;
         _ai.SearchPath();
@@ -87,7 +81,6 @@ public class MoveObject : MonoBehaviour
         }
 
         Vector3 point = (Vector3)_randomNode.position;
-        _wonderingDestination = point;
         return point;
     }
 

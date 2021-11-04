@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 260521303}
   - component: {fileID: 1028668966021862362}
   - component: {fileID: 1488204903}
-  - component: {fileID: 5487167622328270936}
   - component: {fileID: -5445514228051342791}
   m_Layer: 3
   m_Name: red
@@ -225,22 +224,6 @@ MonoBehaviour:
   version: 1
   unwrap: 1
   splitAtEveryPortal: 0
---- !u!114 &5487167622328270936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1639925474728830599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7956b630315f942a1aee80b786f69651, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackDistanceStat:
-    BaseValue: 0
-  startTimeBtwAttack: 0.3
-  attackTarget: {fileID: 0}
 --- !u!114 &-5445514228051342791
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,49 +1,57 @@
+// This class handles all methods that allow an object it's attached to to attack
+
 using Kryz.CharacterStats;
 using UnityEngine;
 
-public class RedAttack : MonoBehaviour
+public class FighterObject : MonoBehaviour
 {
-    private float _timeBtwAttack;
     private GameSettings _gameSettings;
+
     private Renderer rend;
+    private static readonly int OutlineEnabled = Shader.PropertyToID("_OutlineEnabled");
+
+    private GameObject currentTarget;
+    private float _timeBtwAttack;
+    public float startTimeBtwAttack = 0.3f; // Can attack every <value> seconds
     [SerializeField] private CharacterStat attackDistanceStat;
 
-    // Can attack every <value> seconds
-    public float startTimeBtwAttack = 0.3f;
-    [SerializeField] private GameObject attackTarget;
-    private static readonly int OutlineEnabled = Shader.PropertyToID("_OutlineEnabled");
-    private MoveObject moveObject;
-
-    private void Awake()
+    private void Start()
     {
         _gameSettings = GameManager.Instance.gameSettings;
-        moveObject = GetComponent<MoveObject>();
-        attackDistanceStat.BaseValue = _gameSettings.interactionDistance;
+        attackDistanceStat = new CharacterStat
+        {
+            BaseValue = _gameSettings.interactionDistance
+        };
+
+        // For highlighting during attack
         rend = GetComponent<Renderer>();
         rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
     }
 
-    public void SetTarget(GameObject target)
+    public void Attack(GameObject target)
     {
-        if (attackTarget != null) return;
+        if (currentTarget != null) return;
 
-        attackTarget = target;
-        moveObject.SetDestination(target);
+        currentTarget = target;
         rend.sharedMaterial.SetFloat(OutlineEnabled, 1);
     }
 
-    public GameObject GetAttackTarget()
+    public GameObject CurrentTarget()
     {
-        return attackTarget;
+        return currentTarget;
     }
 
     private void Update()
     {
-        if (attackTarget == null) return;
+        if (currentTarget == null)
+        {
+            rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
+            return;
+        }
 
         if (_timeBtwAttack <= 0)
         {
-            Hit(attackTarget);
+            Hit(currentTarget);
             _timeBtwAttack = startTimeBtwAttack;
         }
         else
@@ -71,7 +79,7 @@ public class RedAttack : MonoBehaviour
         }
         else
         {
-            attackTarget = null;
+            currentTarget = null;
             rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
         }
     }

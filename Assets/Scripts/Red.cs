@@ -16,6 +16,7 @@ public class Red : MonoBehaviour
 
     // Allows this object to move in the world
     private MoveObject moveObject;
+    private FighterObject fighterObject;
 
     public CharacterStat speedStat;
     public CharacterStat healthStat;
@@ -29,6 +30,7 @@ public class Red : MonoBehaviour
         _gameSettings = GameManager.Instance.gameSettings;
         _ai = GetComponent<AIPath>();
         moveObject = gameObject.AddComponent<MoveObject>();
+        fighterObject = gameObject.AddComponent<FighterObject>();
         healthStat.BaseValue = _gameSettings.baseHealth;
     }
 
@@ -103,8 +105,7 @@ public class Red : MonoBehaviour
                 if (healthStat.Value <= _gameSettings.runAwayAtHealth)
                 {
                     // Keep attacking the same target if you have one
-                    GameObject currentAttackTarget = GetComponent<RedAttack>().GetAttackTarget();
-                    RunAwayFrom(currentAttackTarget != null ? currentAttackTarget : other);
+                    RunAwayFrom(fighterObject.CurrentTarget() != null ? fighterObject.CurrentTarget() : other);
                 }
                 else
                 {
@@ -153,14 +154,14 @@ public class Red : MonoBehaviour
 
     public bool HasTarget()
     {
-        return GetComponent<RedAttack>().GetAttackTarget() != null ||
+        return fighterObject.CurrentTarget() != null ||
                GetComponent<RedPosture>().GetPostureTarget() != null;
     }
 
     private void Attack(GameObject other)
     {
-        // Sets attack target and movement destination
-        GetComponent<RedAttack>().SetTarget(other);
+        ExecuteNewCommand(new SetDestinationCommand(moveObject, other));
+        ExecuteNewCommand(new AttackCommand(fighterObject, other));
     }
 
     public void RunAwayFrom(GameObject other)
