@@ -98,7 +98,7 @@ public class Red : MonoBehaviour
                 break;
             case GameManager.Behavior.Dove:
                 // Small chance of running away instead
-                if (Random.Range(0, 1) < _gameSettings.postureEndChance)
+                if (Random.Range(0f, 1f) < _gameSettings.postureEndChance)
                 {
                     RunAwayFrom(other);
                 }
@@ -127,7 +127,12 @@ public class Red : MonoBehaviour
 
     public bool CanReproduce()
     {
-        return healthStat.Value >= _gameSettings.reproduceAtHealth;
+        return _gameSettings.enableReproduction && healthStat.Value >= _gameSettings.reproduceAtHealth;
+    }
+
+    public bool HasTarget()
+    {
+        return GetComponent<RedAttack>().AttackTarget() != null;
     }
 
     private void Attack(GameObject other)

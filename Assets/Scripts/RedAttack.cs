@@ -9,13 +9,17 @@ public class RedAttack : MonoBehaviour
 
     // Can attack every <value> seconds
     public float startTimeBtwAttack = 0.3f;
-    private GameObject _attackTarget;
+    [SerializeField] private GameObject attackTarget;
 
     public void SetTarget(GameObject target)
     {
-        _attackTarget = target;
+        attackTarget = target;
     }
 
+    public GameObject AttackTarget()
+    {
+        return attackTarget;
+    }
     private void Awake()
     {
         _gameSettings = GameManager.Instance.gameSettings;
@@ -24,11 +28,11 @@ public class RedAttack : MonoBehaviour
 
     private void Update()
     {
-        if (_attackTarget == null) return;
+        if (attackTarget == null) return;
 
         if (_timeBtwAttack <= 0)
         {
-            Hit(_attackTarget);
+            Hit(attackTarget);
             _timeBtwAttack = startTimeBtwAttack;
         }
         else
@@ -46,7 +50,7 @@ public class RedAttack : MonoBehaviour
         float distance = Vector3.Distance(transform.position, other.transform.position);
         if (distance <= attackDistanceStat.Value)
         {
-            Debug.LogFormat("[{0}] Hitting {1}", me.behavior, enemy.behavior);
+            // Debug.LogFormat("[{0}] Hitting {1}", me.behavior, enemy.behavior);
             enemy.TakeDamage(_gameSettings.hitHealthDamage);
 
             if (enemy.IsDead())
@@ -56,7 +60,7 @@ public class RedAttack : MonoBehaviour
         }
         else
         {
-            _attackTarget = null;
+            attackTarget = null;
         }
     }
 

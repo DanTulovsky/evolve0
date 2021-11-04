@@ -1,7 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
+using UnityEngine.UI;
 using Random = System.Random;
 
 public class GameManager : Singleton<GameManager>
@@ -15,6 +19,7 @@ public class GameManager : Singleton<GameManager>
     private readonly List<GameObject> _killedInhabitants = new();
     private readonly List<GameObject> _reproduceInhabitants = new();
     private bool _initialSpawn;
+    private TMP_Dropdown birdDropdown;
 
     public enum Behavior
     {
@@ -39,6 +44,7 @@ public class GameManager : Singleton<GameManager>
         Red red = i.GetComponent<Red>();
         red.behavior = behavior;
         red.GetComponent<SpriteRenderer>().color = _behaviorToColor[behavior];
+        i.name = $"{red.behavior.ToString()}";
 
         _numInhabitants[behavior]++;
 
@@ -54,12 +60,13 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            Debug.LogFormat("Unable to reproduce, max inhabitants ({0} reached.", gameSettings.maxInhabitants);
+            Debug.LogFormat("Unable to spawn, max inhabitants ({0} reached.", gameSettings.maxInhabitants);
         }
     }
 
     private void SpawnRandomInhabitant()
     {
+        Debug.Log("spawn random");
         if (_initialSpawn) return;
         if (!gameSettings.allowRandomSpawn) return;
 
@@ -67,11 +74,9 @@ public class GameManager : Singleton<GameManager>
         Random random = new();
         Behavior randomBehavior = (Behavior)values.GetValue(random.Next(values.Length));
 
-        if (_inhabitants.Count < gameSettings.maxInhabitants)
-        {
-            GameObject i = SpawnRed(spawnPoint, randomBehavior);
-            _inhabitants.Add(i);
-        }
+        if (_inhabitants.Count >= gameSettings.maxInhabitants) return;
+
+        SpawnInhabitant(randomBehavior);
     }
 
     private IEnumerator SpawnRandomInhabitantWithDelay(float delay)
@@ -84,6 +89,7 @@ public class GameManager : Singleton<GameManager>
             yield return new WaitForSeconds(delay);
         }
 
+        Debug.Log("done with initial spawn");
         _initialSpawn = false;
     }
 
@@ -96,6 +102,21 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public void SpawnManual()
+    {
+
+        string behavior = birdDropdown.options[birdDropdown.value].text;
+
+        switch (behavior)
+        {
+            case "Hawk":
+                SpawnInhabitant(Behavior.Hawk);
+                break;
+            case "Dove":
+                SpawnInhabitant(Behavior.Dove);
+                break;
+        }
+    }
     public void SpawnDove()
     {
         Debug.Log("Spawning dove.");
@@ -109,16 +130,20 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         gameSettings = GetComponent<GameSettings>();
+        var behaviors = Enum.GetValues(typeof(Behavior));
 
-        foreach (Behavior behavior in Enum.GetValues(typeof(Behavior)))
+        foreach (Behavior behavior in behaviors)
         {
             _numInhabitants[behavior] = 0;
         }
 
-        _initialSpawn = true;
-        StartCoroutine(SpawnRandomInhabitantWithDelay(6f));
+        birdDropdown = GameObject.Find("birdDropdown").GetComponent<TMP_Dropdown>();
+        birdDropdown.ClearOptions();
+        birdDropdown.AddOptions(Enum.GetNames(typeof(Behavior)).ToList());
 
-        InvokeRepeating(nameof(SpawnRandomInhabitant), 3, 10);
+        _initialSpawn = true;
+        StartCoroutine(SpawnRandomInhabitantWithDelay(gameSettings.initialSpawnDelay));
+        InvokeRepeating(nameof(SpawnRandomInhabitant), 3, gameSettings.randomSpawnInterval);
     }
 
     private void Update()

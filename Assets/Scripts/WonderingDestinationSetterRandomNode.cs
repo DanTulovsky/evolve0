@@ -23,7 +23,8 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
     private float _lastPathStoppedToleranceTime;
 
     private GraphNode _randomNode;
-    private bool _stuck;
+    [SerializeField] private bool stuck;
+    [SerializeField] private float stuckTime;
 
 
     // Start is called before the first frame update
@@ -72,7 +73,7 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
 
     public void SetDestination(GameObject destination)
     {
-        _ai.destination = _wonderingDestination.transform.position;
+        _ai.destination = destination.transform.position;
     }
 
     // Set the destination in a direction away from other
@@ -127,8 +128,15 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
             }
             else
             {
-                if (Time.time - _lastPathRemainingDistanceTime > _lastPathStoppedToleranceTime)
+                stuckTime = Time.time - _lastPathRemainingDistanceTime;
+                if (stuckTime > _lastPathStoppedToleranceTime)
                 {
+                    // If we are fighting, this is ok
+                    if (gameObject.GetComponent<Red>().HasTarget())
+                    {
+                        return true;
+                    }
+                    Debug.LogFormat("Stuck for {0} out of {1}", Time.time - _lastPathRemainingDistanceTime, _lastPathStoppedToleranceTime);
                     return false;
                 }
             }
@@ -145,7 +153,7 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
         // check if we've made any progress
         if (!MovementProgressMade())
         {
-            _stuck = true;
+            stuck = true;
         }
 
         // Update the destination of the AI if
@@ -153,13 +161,13 @@ public class WonderingDestinationSetterRandomNode : MonoBehaviour
         // the ai has reached the end of the path or it has no path at all
         if (!_ai.reachedEndOfPath && _ai.hasPath)
         {
-            if (!_stuck) return;
+            if (!stuck) return;
         }
 
         _ai.destination = PickRandomPoint();
 
         _ai.SearchPath();
-        _stuck = false;
+        stuck = false;
         _lastPathRemainingDistanceTime = Time.time;
         _lastPathRemainingDistance = float.MaxValue;
     }
