@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Kryz.CharacterStats;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class Red : MonoBehaviour
@@ -24,14 +25,51 @@ public class Red : MonoBehaviour
     private Command setDestination;
     private Command stop;
 
+    private UnityAction buttonPressedListener;
+    private UnityAction<string> buttonPressedListenerString;
+
     private void Awake()
     {
-        // _gameManager = GameManager.Instance;
+        // Use this to add multiple functions to single event and pass in
+        // buttonPressedListener below instead
+        // Method will be executed when "buttonPressed" event fires (triggered by button)
+        buttonPressedListener += ButtonPressedHandler;
+        buttonPressedListenerString += ButtonPressedHandler;
+
         _gameSettings = GameManager.instance.gameSettings;
         _ai = GetComponent<AIPath>();
         moveObject = gameObject.AddComponent<MoveObject>();
         fighterObject = gameObject.AddComponent<FighterObject>();
         healthStat.BaseValue = _gameSettings.baseHealth;
+    }
+
+    private void OnEnable()
+    {
+        UnityAction<int> x = arg0 => {  };
+       EventManager.StartListening("buttonPressed", buttonPressedListener);
+       EventManager.StartListening("buttonPressed", buttonPressedListenerString);
+    }
+
+    private void OnDisable()
+    {
+       EventManager.StopListening("buttonPressed", buttonPressedListener);
+       EventManager.StopListening("buttonPressed", buttonPressedListenerString);
+    }
+
+    private void OnDestroy()
+    {
+       EventManager.StopListening("buttonPressed", buttonPressedListener);
+       EventManager.StopListening("buttonPressed", buttonPressedListenerString);
+    }
+
+    private void ButtonPressedHandler()
+    {
+        Debug.LogFormat("{0} received buttonPressed without a message", behavior);
+    }
+
+    private void ButtonPressedHandler(string message)
+    {
+        Debug.LogFormat("{0} received buttonPressed event with message: {1}", behavior, message);
     }
 
     private void Update()

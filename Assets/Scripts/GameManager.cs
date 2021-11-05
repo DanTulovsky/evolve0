@@ -21,7 +21,6 @@ public class GameManager : Singleton<GameManager>
     private readonly List<GameObject> _killedInhabitants = new();
     private readonly List<GameObject> _reproduceInhabitants = new();
     private bool _initialSpawn;
-    private TMP_Dropdown birdDropdown;
 
     public enum Behavior
     {
@@ -35,8 +34,8 @@ public class GameManager : Singleton<GameManager>
         [Behavior.Hawk] = Color.red
     };
 
-    private readonly List<GameObject> _inhabitants = new();
-    private readonly Dictionary<Behavior, int> _numInhabitants = new();
+    public readonly List<GameObject> inhabitants = new();
+    public readonly Dictionary<Behavior, int> numInhabitants = new();
 
 
     private GameObject SpawnRed(Transform parent, Behavior behavior)
@@ -48,17 +47,17 @@ public class GameManager : Singleton<GameManager>
         red.GetComponent<SpriteRenderer>().color = _behaviorToColor[behavior];
         i.name = $"{red.behavior.ToString()}";
 
-        _numInhabitants[behavior]++;
+        numInhabitants[behavior]++;
 
         return i;
     }
 
     private void SpawnInhabitant(Behavior behavior)
     {
-        if (_inhabitants.Count < gameSettings.maxInhabitants)
+        if (inhabitants.Count < gameSettings.maxInhabitants)
         {
             GameObject i = SpawnRed(spawnPoint, behavior);
-            _inhabitants.Add(i);
+            inhabitants.Add(i);
         }
         else
         {
@@ -75,7 +74,7 @@ public class GameManager : Singleton<GameManager>
         Random random = new();
         Behavior randomBehavior = (Behavior)values.GetValue(random.Next(values.Length));
 
-        if (_inhabitants.Count >= gameSettings.maxInhabitants) return;
+        if (inhabitants.Count >= gameSettings.maxInhabitants) return;
 
         SpawnInhabitant(randomBehavior);
     }
@@ -103,31 +102,6 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public void SpawnManual()
-    {
-
-        string behavior = birdDropdown.options[birdDropdown.value].text;
-
-        switch (behavior)
-        {
-            case "Hawk":
-                SpawnInhabitant(Behavior.Hawk);
-                break;
-            case "Dove":
-                SpawnInhabitant(Behavior.Dove);
-                break;
-        }
-    }
-    public void SpawnDove()
-    {
-        Debug.Log("Spawning dove.");
-        SpawnInhabitant(Behavior.Dove);
-    }
-    public void SpawnHawk()
-    {
-        SpawnInhabitant(Behavior.Hawk);
-    }
-
     private void Start()
     {
         gameSettings = GetComponent<GameSettings>();
@@ -135,12 +109,8 @@ public class GameManager : Singleton<GameManager>
 
         foreach (Behavior behavior in behaviors)
         {
-            _numInhabitants[behavior] = 0;
+            numInhabitants[behavior] = 0;
         }
-
-        birdDropdown = GameObject.Find("birdDropdown").GetComponent<TMP_Dropdown>();
-        birdDropdown.ClearOptions();
-        birdDropdown.AddOptions(Enum.GetNames(typeof(Behavior)).ToList());
 
         _initialSpawn = true;
         StartCoroutine(SpawnRandomInhabitantWithDelay(gameSettings.initialSpawnDelay));
@@ -149,7 +119,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        foreach (GameObject i in _inhabitants)
+        foreach (GameObject i in inhabitants)
         {
             Red red = i.GetComponent<Red>();
             if (red.IsDead())
@@ -166,8 +136,8 @@ public class GameManager : Singleton<GameManager>
         foreach (GameObject i in _killedInhabitants)
         {
             Debug.LogFormat("Killing {0}", i.GetComponent<Red>().behavior);
-            _numInhabitants[i.GetComponent<Red>().behavior]--;
-            _inhabitants.Remove(i);
+            numInhabitants[i.GetComponent<Red>().behavior]--;
+            inhabitants.Remove(i);
             Destroy(i);
         }
 
@@ -179,7 +149,7 @@ public class GameManager : Singleton<GameManager>
             Debug.LogFormat("[{0} reproducing", behavior);
 
             // Destroy the old
-            _inhabitants.Remove(i);
+            inhabitants.Remove(i);
             Destroy(i);
 
             // Spawn two new ones of the same behavior
@@ -190,9 +160,9 @@ public class GameManager : Singleton<GameManager>
 
         _reproduceInhabitants.Clear();
 
-        currentInhabitants = _inhabitants.Count;
+        currentInhabitants = inhabitants.Count;
 
-        hawksTextField.text = $"hawks: {_numInhabitants[Behavior.Hawk].ToString()}";
-        dovesTextField.text = $"doves: {_numInhabitants[Behavior.Dove].ToString()}";
+        hawksTextField.text = $"hawks: {numInhabitants[Behavior.Hawk].ToString()}";
+        dovesTextField.text = $"doves: {numInhabitants[Behavior.Dove].ToString()}";
     }
 }
