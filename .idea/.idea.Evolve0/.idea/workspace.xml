@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22071d5a-f245-4556-8d3d-3aecdf306323" name="Changes" comment="cleanup and updates">
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Command.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Command.cs" afterDir="false" />
+    <list default="true" id="22071d5a-f245-4556-8d3d-3aecdf306323" name="Changes" comment=".idea">
+      <change afterPath="$PROJECT_DIR$/Assets/Editor/RefreshAndPlayButton.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Editor/RefreshAndPlayButton.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Evolve0/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Evolve0/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/scene0-grid.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/scene0-grid.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/FighterObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FighterObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MoveObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MoveObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Red.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Red.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Singleton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Singleton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +32,8 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d1cb908f035d4f79968f36418cb90771805a00/cd/e6c51d47/ArtifactInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/dant/RiderProjects/Evolve0/Assets/Scripts/GameSettings.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/dant/RiderProjects/Evolve0/Assets/Scripts/MoveObject.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/dant/RiderProjects/Evolve0/Assets/Scripts/Command.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Editor/RefreshAndPlayButton.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.1.1/InputSystem/Plugins/EnhancedTouch/Touch.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/dant/RiderProjects/Evolve0/Assets/Scripts/FighterObject.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -89,7 +91,7 @@
       <workItem from="1635822299820" duration="141000" />
       <workItem from="1635861189091" duration="2330000" />
       <workItem from="1635981311490" duration="8691000" />
-      <workItem from="1636026157088" duration="16621000" />
+      <workItem from="1636026157088" duration="17188000" />
     </task>
     <task id="LOCAL-00001" summary="Set destination to the thing being attacked.">
       <created>1635862831014</created>
@@ -154,7 +156,21 @@
       <option name="project" value="LOCAL" />
       <updated>1636082100958</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="more cleanup">
+      <created>1636082277061</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1636082277061</updated>
+    </task>
+    <task id="LOCAL-00011" summary=".idea">
+      <created>1636082297656</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1636082297656</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -186,6 +202,8 @@
     <MESSAGE value="posturing" />
     <MESSAGE value="fixes" />
     <MESSAGE value="cleanup and updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleanup and updates" />
+    <MESSAGE value="more cleanup" />
+    <MESSAGE value=".idea" />
+    <option name="LAST_COMMIT_MESSAGE" value=".idea" />
   </component>
 </project>

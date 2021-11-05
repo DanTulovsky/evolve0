@@ -130,13 +130,13 @@ public class FighterObject : MonoBehaviour
     private void DoPosture(GameObject other)
     {
         Red me = GetComponent<Red>();
-        Red enemy = other.GetComponent<Red>();
+        // Red enemy = other.GetComponent<Red>();
 
         // check how far it is and posture if close enough
         float distance = Vector3.Distance(transform.position, other.transform.position);
         if (distance <= postureDistanceStat.Value)
         {
-            Debug.LogFormat("[{0}] Posturing {1}", me.behavior, enemy.behavior);
+            // Debug.LogFormat("[{0}] Posturing {1}", me.behavior, enemy.behavior);
         }
         else
         {

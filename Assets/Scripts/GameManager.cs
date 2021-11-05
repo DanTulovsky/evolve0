@@ -8,6 +8,7 @@ using Random = System.Random;
 
 public class GameManager : Singleton<GameManager>
 {
+    [Tooltip("Prefab for the inhabitants")]
     public GameObject redPrefab;
     public Transform spawnPoint;
     public GameSettings gameSettings;
