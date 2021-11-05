@@ -45,7 +45,6 @@ public class Red : MonoBehaviour
             // Focus on one enemy
             GameObject randomEnemy = nearBy[Random.Range(0, nearBy.Count - 1)].gameObject;
 
-            // TODO: After attack/posture, don't start a new one for a short time to allow leaving the scene.
             switch (behavior)
             {
                 case GameManager.Behavior.Dove:

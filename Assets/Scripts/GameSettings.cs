@@ -46,7 +46,6 @@ public class GameSettings : MonoBehaviour
 
     [Header("Dove Settings")]
     [Tooltip("The chance that posturing will end (out of 1)")]
-    // TODO: This evaluates every frame, evaluate every posture decision instead
     public float postureEndChance = 0.1f;
 
     [Header("Other Settings")]
