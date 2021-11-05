@@ -93,15 +93,6 @@ public class GameManager : Singleton<GameManager>
         _initialSpawn = false;
     }
 
-    private IEnumerator SpawnInhabitantWithDelay(int number, Behavior behavior, float delay)
-    {
-        for (int i = 0; i < number; i++)
-        {
-            SpawnInhabitant(behavior);
-            yield return new WaitForSeconds(delay);
-        }
-    }
-
     private void Start()
     {
         gameSettings = GetComponent<GameSettings>();
@@ -113,6 +104,7 @@ public class GameManager : Singleton<GameManager>
         }
 
         _initialSpawn = true;
+        // TODO: Move these to Spawn script
         StartCoroutine(SpawnRandomInhabitantWithDelay(gameSettings.initialSpawnDelay));
         InvokeRepeating(nameof(SpawnRandomInhabitant), 3, gameSettings.randomSpawnInterval);
     }
@@ -150,12 +142,12 @@ public class GameManager : Singleton<GameManager>
 
             // Destroy the old
             inhabitants.Remove(i);
+            // TODO: This should be handled by a Destroy script via an event
             Destroy(i);
 
             // Spawn two new ones of the same behavior
             Debug.LogFormat("spawning after reproduction: {0}", behavior);
-            StartCoroutine(SpawnInhabitantWithDelay(gameSettings.reproduceInto, behavior,
-                gameSettings.reproductionDelay));
+            EventManager.TriggerEvent("spawnWithDelay", behavior);
         }
 
         _reproduceInhabitants.Clear();
