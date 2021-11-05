@@ -65,7 +65,7 @@ public class Spawn : MonoBehaviour
 
     private void SpawnInhabitantWithDelay(GameManager.Behavior behavior)
     {
-        SpawnInhabitantWithDelay(behavior, 6f);
+        IEnumerator unused = SpawnInhabitantWithDelay(behavior, 6f);
     }
 
     private IEnumerator SpawnInhabitantWithDelay(GameManager.Behavior behavior, float delay)
