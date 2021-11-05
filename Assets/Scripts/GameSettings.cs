@@ -28,7 +28,7 @@ public class GameSettings : MonoBehaviour
     [Tooltip("At this health, run away from the fight")]
     public float runAwayAtHealth = 5;
     [Tooltip("Lose this much health if fight is lost")]
-    public float loseHealthImpact = 0;
+    public float loseHealthImpact;
     [Tooltip("Lose this much health after wasting time in a non-fight")]
     public float timeWasteHealthImpact = -10;
     [Tooltip("Each hit takes this much health")]
@@ -36,7 +36,7 @@ public class GameSettings : MonoBehaviour
 
     [Header("Reproduction Settings")]
     [Tooltip("Enables reproduction")]
-    public bool enableReproduction = false;
+    public bool enableReproduction;
     [Tooltip("Reprodcues when this health is reached")]
     public float reproduceAtHealth = 100;
     [Tooltip("Reproduces into this many things")]

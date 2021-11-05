@@ -21,7 +21,7 @@ public class FighterObject : MonoBehaviour
 
     private void Start()
     {
-        _gameSettings = GameManager.Instance.gameSettings;
+        _gameSettings = GameManager.instance.gameSettings;
         attackDistanceStat = new CharacterStat
         {
             BaseValue = _gameSettings.interactionDistance

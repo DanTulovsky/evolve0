@@ -27,7 +27,7 @@ public class Red : MonoBehaviour
     private void Awake()
     {
         // _gameManager = GameManager.Instance;
-        _gameSettings = GameManager.Instance.gameSettings;
+        _gameSettings = GameManager.instance.gameSettings;
         _ai = GetComponent<AIPath>();
         moveObject = gameObject.AddComponent<MoveObject>();
         fighterObject = gameObject.AddComponent<FighterObject>();

@@ -1,7 +1,6 @@
 // This class handles all methods that moves the object it's attached to
 
 using Pathfinding;
-using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
