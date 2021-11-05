@@ -15,7 +15,7 @@ public class Red : MonoBehaviour
     private bool _runningAway;
 
     // Allows this object to move in the world
-    private MoveObject moveObject;
+    public MoveObject moveObject;
     private FighterObject fighterObject;
 
     public CharacterStat speedStat;
@@ -105,7 +105,7 @@ public class Red : MonoBehaviour
                 if (healthStat.Value <= _gameSettings.runAwayAtHealth)
                 {
                     // Keep attacking the same target if you have one
-                    RunAwayFrom(fighterObject.CurrentTarget() != null ? fighterObject.CurrentTarget() : other);
+                    RunAwayFrom(fighterObject.CurrentAttackTarget() != null ? fighterObject.CurrentAttackTarget() : other);
                 }
                 else
                 {
@@ -125,9 +125,21 @@ public class Red : MonoBehaviour
                 RunAwayFrom(other);
                 break;
             case GameManager.Behavior.Dove:
-                // Keep posturing with the same target if you have one
-                GameObject currentPostureTarget = GetComponent<RedPosture>().GetPostureTarget();
-                Posture(currentPostureTarget != null ? currentPostureTarget : other);
+                if (fighterObject.RunAway)
+                {
+                    if (fighterObject.CurrentPostureTarget() != null)
+                    {
+                        RunAwayFrom(fighterObject.CurrentPostureTarget());
+                        Invoke(nameof(fighterObject.StopRunning), 3f);
+                    }
+                }
+                else
+                {
+                    // Keep posturing with the same target if you have one
+                    Posture(fighterObject.CurrentPostureTarget() != null
+                        ? fighterObject.CurrentPostureTarget()
+                        : other);
+                }
 
                 break;
             default:
@@ -138,8 +150,8 @@ public class Red : MonoBehaviour
     // Don't fight, but posture until someone backs down
     private void Posture(GameObject other)
     {
-        // Sets posture target and movement destination
-        GetComponent<RedPosture>().SetTarget(other);
+        ExecuteNewCommand(new SetDestinationCommand(moveObject, other));
+        ExecuteNewCommand(new PostureCommand(fighterObject, other));
     }
 
     public bool IsDead()
@@ -154,8 +166,8 @@ public class Red : MonoBehaviour
 
     public bool HasTarget()
     {
-        return fighterObject.CurrentTarget() != null ||
-               GetComponent<RedPosture>().GetPostureTarget() != null;
+        return fighterObject.CurrentAttackTarget() != null ||
+               fighterObject.CurrentPostureTarget() != null;
     }
 
     private void Attack(GameObject other)
@@ -164,7 +176,7 @@ public class Red : MonoBehaviour
         ExecuteNewCommand(new AttackCommand(fighterObject, other));
     }
 
-    public void RunAwayFrom(GameObject other)
+    private void RunAwayFrom(GameObject other)
     {
         if (_runningAway) return;
 

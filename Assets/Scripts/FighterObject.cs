@@ -10,15 +10,23 @@ public class FighterObject : MonoBehaviour
     private Renderer rend;
     private static readonly int OutlineEnabled = Shader.PropertyToID("_OutlineEnabled");
 
-    private GameObject currentTarget;
+    private GameObject currentAttackTarget;
+    private GameObject currentPostureTarget;
     private float _timeBtwAttack;
-    public float startTimeBtwAttack = 0.3f; // Can attack every <value> seconds
+    private const float START_TIME_BTW_ATTACK = 0.3f; // Can attack every <value> seconds
+    public bool RunAway;
+
     [SerializeField] private CharacterStat attackDistanceStat;
+    [SerializeField] private CharacterStat postureDistanceStat;
 
     private void Start()
     {
         _gameSettings = GameManager.Instance.gameSettings;
         attackDistanceStat = new CharacterStat
+        {
+            BaseValue = _gameSettings.interactionDistance
+        };
+        postureDistanceStat = new CharacterStat
         {
             BaseValue = _gameSettings.interactionDistance
         };
@@ -30,20 +38,33 @@ public class FighterObject : MonoBehaviour
 
     public void Attack(GameObject target)
     {
-        if (currentTarget != null) return;
+        if (currentAttackTarget != null) return;
 
-        currentTarget = target;
+        currentAttackTarget = target;
         rend.sharedMaterial.SetFloat(OutlineEnabled, 1);
     }
 
-    public GameObject CurrentTarget()
+    public void Posture(GameObject target)
     {
-        return currentTarget;
+        if (currentPostureTarget != null) return;
+
+        currentPostureTarget = target;
+        rend.sharedMaterial.SetFloat(OutlineEnabled, 1);
+    }
+
+    public GameObject CurrentAttackTarget()
+    {
+        return currentAttackTarget;
+    }
+
+    public GameObject CurrentPostureTarget()
+    {
+        return currentPostureTarget;
     }
 
     private void Update()
     {
-        if (currentTarget == null)
+        if (currentAttackTarget == null && currentPostureTarget == null)
         {
             rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
             return;
@@ -51,8 +72,25 @@ public class FighterObject : MonoBehaviour
 
         if (_timeBtwAttack <= 0)
         {
-            Hit(currentTarget);
-            _timeBtwAttack = startTimeBtwAttack;
+            if (currentAttackTarget != null)
+            {
+                DoAttack(currentAttackTarget);
+            }
+            else if (currentPostureTarget != null)
+            {
+                if (Random.Range(0f, 1f) < _gameSettings.postureEndChance)
+                {
+                    Debug.Log("Had enough posturing!");
+                    GetComponent<Red>().healthStat.BaseValue += _gameSettings.timeWasteHealthImpact;
+                    currentPostureTarget = null;
+                    RunAway = true;
+                    return;
+                }
+
+                DoPosture(currentPostureTarget);
+            }
+
+            _timeBtwAttack = START_TIME_BTW_ATTACK;
         }
         else
         {
@@ -60,7 +98,12 @@ public class FighterObject : MonoBehaviour
         }
     }
 
-    private void Hit(GameObject other)
+    public void StopRunning()
+    {
+        RunAway = false;
+    }
+
+    private void DoAttack(GameObject other)
     {
         Red me = GetComponent<Red>();
         Red enemy = other.GetComponent<Red>();
@@ -79,8 +122,31 @@ public class FighterObject : MonoBehaviour
         }
         else
         {
-            currentTarget = null;
+            currentAttackTarget = null;
             rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
+        }
+    }
+
+    private void DoPosture(GameObject other)
+    {
+        Red me = GetComponent<Red>();
+        Red enemy = other.GetComponent<Red>();
+
+        // check how far it is and posture if close enough
+        float distance = Vector3.Distance(transform.position, other.transform.position);
+        if (distance <= postureDistanceStat.Value)
+        {
+            Debug.LogFormat("[{0}] Posturing {1}", me.behavior, enemy.behavior);
+        }
+        else
+        {
+            // Enemy ran away or died, we win
+            currentPostureTarget = null;
+            rend.material.SetFloat(OutlineEnabled, 0);
+
+            me.healthStat.BaseValue += _gameSettings.winHealthImpact;
+            // But we wasted time
+            me.healthStat.BaseValue += _gameSettings.timeWasteHealthImpact;
         }
     }
 

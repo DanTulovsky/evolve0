@@ -36,7 +36,6 @@ public class MoveObject : MonoBehaviour
     public void Go()
     {
         _ai.canMove = true;
-        // SetDestination(_wonderingDestination);
     }
 
     // RunAwayFrom makes the object go in the opposite direction from other
