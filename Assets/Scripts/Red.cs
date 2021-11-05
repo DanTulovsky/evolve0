@@ -124,7 +124,7 @@ public class Red : MonoBehaviour
                 RunAwayFrom(other);
                 break;
             case GameManager.Behavior.Dove:
-                if (fighterObject.RunAway)
+                if (fighterObject.runAway)
                 {
                     if (fighterObject.CurrentPostureTarget() != null)
                     {

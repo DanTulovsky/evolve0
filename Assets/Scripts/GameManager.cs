@@ -12,6 +12,9 @@ public class GameManager : Singleton<GameManager>
     public Transform spawnPoint;
     public GameSettings gameSettings;
 
+    public TMP_Text hawksTextField;
+    public TMP_Text dovesTextField;
+
     public int currentInhabitants;
 
     private readonly List<GameObject> _killedInhabitants = new();
@@ -187,5 +190,8 @@ public class GameManager : Singleton<GameManager>
         _reproduceInhabitants.Clear();
 
         currentInhabitants = _inhabitants.Count;
+
+        hawksTextField.text = $"hawks: {_numInhabitants[Behavior.Hawk].ToString()}";
+        dovesTextField.text = $"doves: {_numInhabitants[Behavior.Dove].ToString()}";
     }
 }

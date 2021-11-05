@@ -32,7 +32,7 @@ public class GameSettings : MonoBehaviour
     [Tooltip("Lose this much health after wasting time in a non-fight")]
     public float timeWasteHealthImpact = -10;
     [Tooltip("Each hit takes this much health")]
-    public float hitHealthDamage = -1;
+    public float hitHealthDamage = -5;
 
     [Header("Reproduction Settings")]
     [Tooltip("Enables reproduction")]

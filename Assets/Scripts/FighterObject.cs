@@ -14,7 +14,7 @@ public class FighterObject : MonoBehaviour
     private GameObject currentPostureTarget;
     private float _timeBtwAttack;
     private const float START_TIME_BTW_ATTACK = 0.3f; // Can attack every <value> seconds
-    public bool RunAway;
+    public bool runAway;
 
     [SerializeField] private CharacterStat attackDistanceStat;
     [SerializeField] private CharacterStat postureDistanceStat;
@@ -33,7 +33,7 @@ public class FighterObject : MonoBehaviour
 
         // For highlighting during attack
         rend = GetComponent<Renderer>();
-        rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
+        rend.material.SetFloat(OutlineEnabled, 0);
     }
 
     public void Attack(GameObject target)
@@ -41,7 +41,7 @@ public class FighterObject : MonoBehaviour
         if (currentAttackTarget != null) return;
 
         currentAttackTarget = target;
-        rend.sharedMaterial.SetFloat(OutlineEnabled, 1);
+        rend.material.SetFloat(OutlineEnabled, 1);
     }
 
     public void Posture(GameObject target)
@@ -49,7 +49,7 @@ public class FighterObject : MonoBehaviour
         if (currentPostureTarget != null) return;
 
         currentPostureTarget = target;
-        rend.sharedMaterial.SetFloat(OutlineEnabled, 1);
+        rend.material.SetFloat(OutlineEnabled, 1);
     }
 
     public GameObject CurrentAttackTarget()
@@ -66,7 +66,7 @@ public class FighterObject : MonoBehaviour
     {
         if (currentAttackTarget == null && currentPostureTarget == null)
         {
-            rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
+            rend.material.SetFloat(OutlineEnabled, 0);
             return;
         }
 
@@ -83,7 +83,7 @@ public class FighterObject : MonoBehaviour
                     Debug.Log("Had enough posturing!");
                     GetComponent<Red>().healthStat.BaseValue += _gameSettings.timeWasteHealthImpact;
                     currentPostureTarget = null;
-                    RunAway = true;
+                    runAway = true;
                     return;
                 }
 
@@ -100,7 +100,7 @@ public class FighterObject : MonoBehaviour
 
     public void StopRunning()
     {
-        RunAway = false;
+        runAway = false;
     }
 
     private void DoAttack(GameObject other)
@@ -123,7 +123,7 @@ public class FighterObject : MonoBehaviour
         else
         {
             currentAttackTarget = null;
-            rend.sharedMaterial.SetFloat(OutlineEnabled, 0);
+            rend.material.SetFloat(OutlineEnabled, 0);
         }
     }
 

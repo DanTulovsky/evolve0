@@ -1,6 +1,7 @@
 // This class handles all methods that moves the object it's attached to
 
 using Pathfinding;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,6 +21,7 @@ public class MoveObject : MonoBehaviour
     private GraphNode _randomNode;
     private bool stuck;
     [SerializeField] private float stuckTime;
+
 
     //These methods will be executed by their own command
 
