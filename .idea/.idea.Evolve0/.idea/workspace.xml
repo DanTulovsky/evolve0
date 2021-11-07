@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22071d5a-f245-4556-8d3d-3aecdf306323" name="Changes" comment="TODOs">
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
+    <list default="true" id="22071d5a-f245-4556-8d3d-3aecdf306323" name="Changes" comment="updates">
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/scene0-grid.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/scene0-grid.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,20 +21,14 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Spawn.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.tilemap@1.0.0/Editor/GridBrush.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f54d40672d634a418291cdef336228e5156000/88/94e59936/Behaviour.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d1cb908f035d4f79968f36418cb90771805a00/cd/e6c51d47/ArtifactInfo.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/EventManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f54d40672d634a418291cdef336228e5156000/cb/000a3f1e/Object.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.1.1/InputSystem/Plugins/EnhancedTouch/Touch.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SpawnButton.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.mathematics@1.2.4/Unity.Mathematics/matrix.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/dant/RiderProjects/Evolve0/Assets/Scripts/GameManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.1.1/InputSystem/Devices/InputDeviceBuilder.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TriggerButton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f54d40672d634a418291cdef336228e5156000/cb/000a3f1e/Object.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Editor/RefreshAndPlayButton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.1.1/InputSystem/Plugins/EnhancedTouch/Touch.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/dant/RiderProjects/evolve0/Assets/Scenes/scene0-grid.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.mathematics@1.2.4/Unity.Mathematics/matrix.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="NamedScopeManager">
     <scope name="My scripts" pattern="file[rider.module]:Assets/Scripts/*" />
@@ -54,6 +48,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="TODO_SCOPE" value="My scripts" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.google.cloudcode.ide_session_index" value="20211106_0000" />
     <property name="settings.editor.selected.configurable" value="com.maddyhome.idea.vim.ui.VimEmulationConfigurable" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -92,6 +88,7 @@
       <workItem from="1635981311490" duration="8691000" />
       <workItem from="1636026157088" duration="24923000" />
       <workItem from="1636133023259" duration="2392000" />
+      <workItem from="1636251726727" duration="295000" />
     </task>
     <task id="LOCAL-00001" summary="Set destination to the thing being attacked.">
       <created>1635862831014</created>
@@ -205,7 +202,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636135916401</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="updates">
+      <created>1636251934078</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1636251934078</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,8 +244,8 @@
     <MESSAGE value="more cleanup" />
     <MESSAGE value=".idea" />
     <MESSAGE value="more events" />
-    <MESSAGE value="updates" />
     <MESSAGE value="TODOs" />
-    <option name="LAST_COMMIT_MESSAGE" value="TODOs" />
+    <MESSAGE value="updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="updates" />
   </component>
 </project>
