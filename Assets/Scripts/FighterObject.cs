@@ -80,7 +80,6 @@ public class FighterObject : MonoBehaviour
             {
                 if (Random.Range(0f, 1f) < _gameSettings.postureEndChance)
                 {
-                    Debug.Log("Had enough posturing!");
                     GetComponent<Red>().healthStat.BaseValue += _gameSettings.timeWasteHealthImpact;
                     currentPostureTarget = null;
                     runAway = true;

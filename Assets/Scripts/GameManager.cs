@@ -126,7 +126,6 @@ public class GameManager : Singleton<GameManager>
 
         foreach (GameObject i in _killedInhabitants)
         {
-            Debug.LogFormat("Killing {0}", i.GetComponent<Red>().behavior);
             numInhabitants[i.GetComponent<Red>().behavior]--;
             inhabitants.Remove(i);
             Destroy(i);
@@ -137,7 +136,6 @@ public class GameManager : Singleton<GameManager>
         foreach (GameObject i in _reproduceInhabitants)
         {
             Behavior behavior = i.GetComponent<Red>().behavior;
-            Debug.LogFormat("[{0} reproducing", behavior);
 
             // Destroy the old
             inhabitants.Remove(i);
@@ -145,7 +143,6 @@ public class GameManager : Singleton<GameManager>
             Destroy(i);
 
             // Spawn two new ones of the same behavior
-            Debug.LogFormat("spawning after reproduction: {0}", behavior);
             EventManager.TriggerEvent("spawnWithDelay", behavior);
         }
 
