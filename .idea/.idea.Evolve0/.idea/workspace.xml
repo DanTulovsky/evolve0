@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22071d5a-f245-4556-8d3d-3aecdf306323" name="Changes" comment="cleanup">
-      <change afterPath="$PROJECT_DIR$/Assets/_sprites.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_sprites/placeholder0.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_sprites/placeholder0.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Destroy.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Destroy.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Evolve0/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Evolve0/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/scene0-grid.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/scene0-grid.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EventManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EventManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Spawn.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Spawn.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,16 +28,14 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.mathematics@1.2.4/Unity.Mathematics/matrix.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.tilemap@1.0.0/Editor/GridBrush.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d1cb908f035d4f79968f36418cb90771805a00/cd/e6c51d47/ArtifactInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.1.1/InputSystem/Devices/InputDeviceBuilder.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/dant/RiderProjects/evolve0/Assets/Scripts/FighterObject.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d1cb908f035d4f79968f36418cb90771805a00/cd/e6c51d47/ArtifactInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Destroy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f54d40672d634a418291cdef336228e5156000/cb/000a3f1e/Object.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.1.1/InputSystem/Plugins/EnhancedTouch/Touch.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/dant/RiderProjects/evolve0/Assets/Scenes/scene0-grid.unity" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/dant/RiderProjects/evolve0/Assets/Scenes/scene0-grid.unity" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.mathematics@1.2.4/Unity.Mathematics/matrix.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="NamedScopeManager">
     <scope name="My scripts" pattern="file[rider.module]:Assets/Scripts/*" />
@@ -70,10 +71,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="45992">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="45992" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -95,6 +96,7 @@
       <workItem from="1636026157088" duration="24923000" />
       <workItem from="1636133023259" duration="2392000" />
       <workItem from="1636251726727" duration="1458000" />
+      <workItem from="1636427294890" duration="1993000" />
     </task>
     <task id="LOCAL-00001" summary="Set destination to the thing being attacked.">
       <created>1635862831014</created>

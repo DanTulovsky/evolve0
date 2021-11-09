@@ -7,6 +7,7 @@ public class EventManager : MonoBehaviour
     private Dictionary<string, UnityEvent> eventDictionary;
     private Dictionary<string, UnityEvent<string>> eventDictionaryString;
     private Dictionary<string, UnityEvent<GameManager.Behavior>> eventDictionaryBehavior;
+    private Dictionary<string, UnityEvent<GameObject>> eventDictionaryGameObject;
 
     private static EventManager eventManager;
 
@@ -36,6 +37,7 @@ public class EventManager : MonoBehaviour
         eventDictionary ??= new Dictionary<string, UnityEvent>();
         eventDictionaryString ??= new Dictionary<string, UnityEvent<string>>();
         eventDictionaryBehavior ??= new Dictionary<string, UnityEvent<GameManager.Behavior>>();
+        eventDictionaryGameObject ??= new Dictionary<string, UnityEvent<GameObject>>();
     }
 
     // No parameters
@@ -90,7 +92,7 @@ public class EventManager : MonoBehaviour
     {
         if (eventManager == null) return;
 
-        if (instance.eventDictionaryString.TryGetValue(eventName, out UnityEvent<string> thisEvent))
+        if (instance.eventDictionaryString.TryGetValue(eventName, out var thisEvent))
         {
             thisEvent.RemoveListener(listener);
         }
@@ -98,7 +100,7 @@ public class EventManager : MonoBehaviour
 
     public static void TriggerEvent(string eventName, string message)
     {
-        if (instance.eventDictionaryString.TryGetValue(eventName, out UnityEvent<string> thisEvent))
+        if (instance.eventDictionaryString.TryGetValue(eventName, out var thisEvent))
         {
             thisEvent.Invoke(message);
         }
@@ -107,7 +109,7 @@ public class EventManager : MonoBehaviour
     // Behavior parameter
     public static void StartListening(string eventName, UnityAction<GameManager.Behavior> listener)
     {
-        if (instance.eventDictionaryBehavior.TryGetValue(eventName, out UnityEvent<GameManager.Behavior> thisEvent))
+        if (instance.eventDictionaryBehavior.TryGetValue(eventName, out var thisEvent))
         {
             thisEvent.AddListener(listener);
         }
@@ -123,17 +125,50 @@ public class EventManager : MonoBehaviour
     {
         if (eventManager == null) return;
 
-        if (instance.eventDictionaryBehavior.TryGetValue(eventName, out UnityEvent<GameManager.Behavior> thisEvent))
+        if (instance.eventDictionaryBehavior.TryGetValue(eventName, out var thisEvent))
         {
             thisEvent.RemoveListener(listener);
         }
     }
 
-    public static void TriggerEvent(string eventName, GameManager.Behavior message)
+    public static void TriggerEvent(string eventName, GameManager.Behavior behavior)
     {
-        if (instance.eventDictionaryBehavior.TryGetValue(eventName, out UnityEvent<GameManager.Behavior> thisEvent))
+        if (instance.eventDictionaryBehavior.TryGetValue(eventName, out var thisEvent))
         {
-            thisEvent.Invoke(message);
+            thisEvent.Invoke(behavior);
+        }
+    }
+
+    // GameObject parameter
+    public static void StartListening(string eventName, UnityAction<GameObject> listener)
+    {
+        if (instance.eventDictionaryGameObject.TryGetValue(eventName, out var thisEvent))
+        {
+            thisEvent.AddListener(listener);
+        }
+        else
+        {
+            thisEvent = new UnityEvent<GameObject>();
+            thisEvent.AddListener(listener);
+            instance.eventDictionaryGameObject.Add(eventName, thisEvent);
+        }
+    }
+
+    public static void StopListening(string eventName, UnityAction<GameObject> listener)
+    {
+        if (eventManager == null) return;
+
+        if (instance.eventDictionaryGameObject.TryGetValue(eventName, out var thisEvent))
+        {
+            thisEvent.RemoveListener(listener);
+        }
+    }
+
+    public static void TriggerEvent(string eventName, GameObject gameObject)
+    {
+        if (instance.eventDictionaryGameObject.TryGetValue(eventName, out var thisEvent))
+        {
+            thisEvent.Invoke(gameObject);
         }
     }
 

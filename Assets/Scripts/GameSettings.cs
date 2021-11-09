@@ -44,9 +44,15 @@ public class GameSettings : MonoBehaviour
     [Tooltip("Delay between spawns after reproduction")]
     public float reproductionDelay = 4f;
 
+    [Header("Hawk Settings")]
+    [Tooltip("Initial speed for a hawk")]
+    public float hawkSpeed = 3f;
+
     [Header("Dove Settings")]
     [Tooltip("The chance that posturing will end (out of 1)")]
     public float postureEndChance = 0.1f;
+    [Tooltip("Initial speed for a dove")]
+    public float doveSpeed = 5f;
 
     [Header("Other Settings")]
     [Tooltip("Defines the mask of what is considered enemies")]
