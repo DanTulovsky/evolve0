@@ -125,18 +125,18 @@ public class Spawn : MonoBehaviour
     {
         GameObject i = Instantiate(redPrefab, parent.position, parent.rotation, parent);
 
-        Red red = i.GetComponent<Red>();
-        red.behavior = behavior;
-        red.GetComponent<SpriteRenderer>().color = _behaviorToColor[behavior];
-        i.name = $"{red.behavior.ToString()}";
+        Bird bird = i.GetComponent<Bird>();
+        bird.behavior = behavior;
+        bird.GetComponent<SpriteRenderer>().color = _behaviorToColor[behavior];
+        i.name = $"{bird.behavior.ToString()}";
 
         switch (behavior)
         {
             case GameManager.Behavior.Hawk:
-                red.speedStat.BaseValue = _gameSettings.hawkSpeed;
+                bird.speedStat.BaseValue = _gameSettings.hawkSpeed;
                 break;
             case GameManager.Behavior.Dove:
-                red.speedStat.BaseValue = _gameSettings.doveSpeed;
+                bird.speedStat.BaseValue = _gameSettings.doveSpeed;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(behavior), behavior, null);

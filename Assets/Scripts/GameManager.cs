@@ -32,13 +32,13 @@ public class GameManager : Singleton<GameManager>
     {
         foreach (GameObject i in inhabitants)
         {
-            Red red = i.GetComponent<Red>();
-            if (red.IsDead())
+            Bird bird = i.GetComponent<Bird>();
+            if (bird.IsDead())
             {
                 killedInhabitants.Add(i);
             }
 
-            if (red.CanReproduce())
+            if (bird.CanReproduce())
             {
                 reproduceInhabitants.Add(i);
             }
@@ -54,12 +54,12 @@ public class GameManager : Singleton<GameManager>
 
         foreach (GameObject i in reproduceInhabitants)
         {
-            Red red = i.GetComponent<Red>();
+            Bird bird = i.GetComponent<Bird>();
             // Destroy the old
-            EventManager.TriggerEvent("destroy", red.gameObject);
+            EventManager.TriggerEvent("destroy", bird.gameObject);
 
             // Spawn two new ones of the same behavior
-            EventManager.TriggerEvent("spawnWithDelay", red.behavior);
+            EventManager.TriggerEvent("spawnWithDelay", bird.behavior);
         }
 
         reproduceInhabitants.Clear();
@@ -70,6 +70,6 @@ public class GameManager : Singleton<GameManager>
 
     private int CountOf(Behavior behavior)
     {
-        return inhabitants.Count(inhabitant => inhabitant.GetComponent<Red>().behavior == behavior);
+        return inhabitants.Count(inhabitant => inhabitant.GetComponent<Bird>().behavior == behavior);
     }
 }

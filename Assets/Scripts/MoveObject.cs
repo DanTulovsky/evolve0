@@ -122,7 +122,7 @@ public class MoveObject : MonoBehaviour
                 if (stuckTime > _lastPathStoppedToleranceTime)
                 {
                     // If we are fighting, this is ok
-                    if (gameObject.GetComponent<Red>().HasTarget())
+                    if (gameObject.GetComponent<Bird>().HasTarget())
                     {
                         return true;
                     }

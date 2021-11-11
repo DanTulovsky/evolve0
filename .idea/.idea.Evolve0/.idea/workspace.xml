@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22071d5a-f245-4556-8d3d-3aecdf306323" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/_docs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_docs/astar_collision_diameter.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_docs/astar_collision_diameter.png.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_docs/diameter_of_0.9.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_docs/diameter_of_0.9.png.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_docs/diameter_of_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_docs/diameter_of_1.png.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_docs/spike_ball_size.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_docs/spike_ball_size.png.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_tiles/Dungeon_00_empty.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_tiles/Dungeon_00_empty.asset.meta" afterDir="false" />
+    <list default="true" id="22071d5a-f245-4556-8d3d-3aecdf306323" name="Changes" comment="many updates">
+      <change afterPath="$PROJECT_DIR$/Assets/_prefabs/bird.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_prefabs/bird.prefab.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Evolve0/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Evolve0/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/scene0-grid.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/scene0-grid.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Destroy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Destroy.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/FighterObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FighterObject.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MoveObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MoveObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Red.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bird.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Red.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bird.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Spawn.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Spawn.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_prefabs/red.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_prefabs/red.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/palettes/where the cross lives.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/palettes/where the cross lives.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_prefabs/red.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_prefabs/red.prefab.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +101,7 @@
       <workItem from="1636133023259" duration="2392000" />
       <workItem from="1636251726727" duration="1458000" />
       <workItem from="1636427294890" duration="5169000" />
-      <workItem from="1636600048322" duration="1907000" />
+      <workItem from="1636600048322" duration="2435000" />
     </task>
     <task id="LOCAL-00001" summary="Set destination to the thing being attacked.">
       <created>1635862831014</created>
@@ -259,7 +250,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636429335454</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="many updates">
+      <created>1636602738698</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1636602738698</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -299,6 +297,7 @@
     <MESSAGE value="no auto refresh" />
     <MESSAGE value="cleanup" />
     <MESSAGE value="destroy" />
-    <option name="LAST_COMMIT_MESSAGE" value="destroy" />
+    <MESSAGE value="many updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="many updates" />
   </component>
 </project>

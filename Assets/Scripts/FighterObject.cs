@@ -80,7 +80,7 @@ public class FighterObject : MonoBehaviour
             {
                 if (Random.Range(0f, 1f) < _gameSettings.postureEndChance)
                 {
-                    GetComponent<Red>().healthStat.BaseValue += _gameSettings.timeWasteHealthImpact;
+                    GetComponent<Bird>().healthStat.BaseValue += _gameSettings.timeWasteHealthImpact;
                     currentPostureTarget = null;
                     runAway = true;
                     return;
@@ -104,8 +104,8 @@ public class FighterObject : MonoBehaviour
 
     private void DoAttack(GameObject other)
     {
-        Red me = GetComponent<Red>();
-        Red enemy = other.GetComponent<Red>();
+        Bird me = GetComponent<Bird>();
+        Bird enemy = other.GetComponent<Bird>();
 
         // check how far it is and attack if close enough
         ColliderDistance2D distance2D = Physics2D.Distance(this.gameObject.GetComponent<Collider2D>(), other.GetComponent<Collider2D>());
@@ -130,7 +130,7 @@ public class FighterObject : MonoBehaviour
 
     private void DoPosture(GameObject other)
     {
-        Red me = GetComponent<Red>();
+        Bird me = GetComponent<Bird>();
         // Red enemy = other.GetComponent<Red>();
 
         // check how far it is and posture if close enough

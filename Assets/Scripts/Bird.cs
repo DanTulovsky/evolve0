@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-public class Red : MonoBehaviour
+public class Bird : MonoBehaviour
 {
     public GameManager.Behavior behavior;
 
@@ -45,7 +45,6 @@ public class Red : MonoBehaviour
 
     private void OnEnable()
     {
-        UnityAction<int> x = arg0 => {  };
        EventManager.StartListening("buttonPressed", buttonPressedListener);
        EventManager.StartListening("buttonPressed", buttonPressedListenerString);
     }
@@ -122,8 +121,7 @@ public class Red : MonoBehaviour
         // ReSharper disable once Unity.PreferNonAllocApi
         var nearBy = new List<Collider2D>(Physics2D.OverlapCircleAll(
             transform.position,
-            // Attack method checks distance between center points
-            _gameSettings.interactionDistance / 2,
+            _gameSettings.interactionDistance,
             _gameSettings.whatIsEnemies));
 
         if (nearBy.Contains(selfCollider))
@@ -136,7 +134,7 @@ public class Red : MonoBehaviour
 
     private void HawkHandler(GameObject other)
     {
-        switch (other.GetComponent<Red>().behavior)
+        switch (other.GetComponent<Bird>().behavior)
         {
             default:
                 if (healthStat.Value <= _gameSettings.runAwayAtHealth)
@@ -155,7 +153,7 @@ public class Red : MonoBehaviour
 
     private void DoveHandler(GameObject other)
     {
-        switch (other.GetComponent<Red>().behavior)
+        switch (other.GetComponent<Bird>().behavior)
         {
             case GameManager.Behavior.Hawk:
                 // Runs away even if currently posturing
