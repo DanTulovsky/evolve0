@@ -25,7 +25,6 @@ public class Spawn : MonoBehaviour
         EventManager.StartListening("spawnWithDelay", SpawnInhabitantWithDelay);
     }
 
-
     private void Awake()
     {
         gameManager = GameManager.instance;
@@ -36,36 +35,25 @@ public class Spawn : MonoBehaviour
     {
         _initialSpawn = true;
 
-        StartCoroutine(SpawnRandomInhabitantWithDelay(_gameSettings.initialSpawnDelay));
+        StartCoroutine(SpawnRandomInhabitantWithDelay(_gameSettings.spawnDelay));
         InvokeRepeating(nameof(SpawnRandomInhabitant), 3, _gameSettings.randomSpawnInterval);
     }
 
     private void Update()
     {
-        foreach (GameObject i in GameManager.instance.inhabitants)
-        {
-            Red red = i.GetComponent<Red>();
-            if (red.IsDead())
-            {
-                GameManager.instance.killedInhabitants.Add(i);
-            }
 
-            if (red.CanReproduce())
-            {
-                GameManager.instance.reproduceInhabitants.Add(i);
-            }
-        }
-
-        foreach (GameObject i in GameManager.instance.reproduceInhabitants)
-        {
-            // Destroy the old
-            EventManager.TriggerEvent("destroy");
-
-            // Spawn two new ones of the same behavior
-            EventManager.TriggerEvent("spawnWithDelay", i.GetComponent<Red>().behavior);
-        }
-
-        GameManager.instance.reproduceInhabitants.Clear();
+        // foreach (GameObject i in GameManager.instance.reproduceInhabitants)
+        // {
+        //     Red red = i.GetComponent<Red>();
+        //
+        //     // Destroy the old
+        //     EventManager.TriggerEvent("destroy");
+        //
+        //     // Spawn two new ones of the same behavior
+        //     EventManager.TriggerEvent("spawnWithDelay", red.behavior);
+        // }
+        //
+        // GameManager.instance.reproduceInhabitants.Clear();
     }
 
     private void SpawnRandomInhabitant()
@@ -128,8 +116,8 @@ public class Spawn : MonoBehaviour
     {
         for (int i = 0; i < _gameSettings.reproduceInto; i++)
         {
-            SpawnInhabitant(behavior);
             yield return new WaitForSeconds(delay);
+            SpawnInhabitant(behavior);
         }
     }
 

@@ -7,12 +7,12 @@ public class GameSettings : MonoBehaviour
     public int maxInhabitants = 20;
     [Tooltip("Spawn this many inhabitants initially.")]
     public int initialInhabitants = 2;
-    [Tooltip("How far away for a fight/posture/etc...")]
-    public float interactionDistance = 1;
+    [Tooltip("How far away for a fight/posture/etc... (measured as distance between colliders")]
+    public float interactionDistance = 0.2f;
 
     [Header("Spawn Settings")]
-    [Tooltip("Interval between initial spawns")]
-    public float initialSpawnDelay = 6f;
+    [Tooltip("Interval between spawns")]
+    public float spawnDelay = 6f;
     [Tooltip("Enable random spawns")]
     public bool allowRandomSpawn;
     [Tooltip("Spawn random things every this many seconds")]
@@ -37,12 +37,12 @@ public class GameSettings : MonoBehaviour
     [Header("Reproduction Settings")]
     [Tooltip("Enables reproduction")]
     public bool enableReproduction;
-    [Tooltip("Reprodcues when this health is reached")]
+    [Tooltip("Reproduces when this health is reached")]
     public float reproduceAtHealth = 100;
     [Tooltip("Reproduces into this many things")]
     public int reproduceInto = 2;
-    [Tooltip("Delay between spawns after reproduction")]
-    public float reproductionDelay = 4f;
+    // [Tooltip("Delay between spawns after reproduction")]
+    // public float reproductionDelay = 4f;
 
     [Header("Hawk Settings")]
     [Tooltip("Initial speed for a hawk")]

@@ -7,7 +7,7 @@ public class Destroy : MonoBehaviour
         EventManager.StartListening("destroy", DestroyInhabitant);
     }
 
-    private void DestroyInhabitant(GameObject gameObject)
+    private static void DestroyInhabitant(GameObject gameObject)
     {
         GameManager.instance.inhabitants.Remove(gameObject);
         Destroy(gameObject);

@@ -30,6 +30,19 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
+        foreach (GameObject i in inhabitants)
+        {
+            Red red = i.GetComponent<Red>();
+            if (red.IsDead())
+            {
+                killedInhabitants.Add(i);
+            }
+
+            if (red.CanReproduce())
+            {
+                reproduceInhabitants.Add(i);
+            }
+        }
 
         foreach (GameObject i in killedInhabitants)
         {
@@ -38,6 +51,18 @@ public class GameManager : Singleton<GameManager>
         }
 
         killedInhabitants.Clear();
+
+        foreach (GameObject i in reproduceInhabitants)
+        {
+            Red red = i.GetComponent<Red>();
+            // Destroy the old
+            EventManager.TriggerEvent("destroy", red.gameObject);
+
+            // Spawn two new ones of the same behavior
+            EventManager.TriggerEvent("spawnWithDelay", red.behavior);
+        }
+
+        reproduceInhabitants.Clear();
 
         hawksTextField.text = $"hawks: {CountOf(Behavior.Hawk).ToString()}";
         dovesTextField.text = $"doves: {CountOf(Behavior.Dove).ToString()}";

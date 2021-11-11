@@ -108,8 +108,10 @@ public class FighterObject : MonoBehaviour
         Red enemy = other.GetComponent<Red>();
 
         // check how far it is and attack if close enough
-        float distance = Vector3.Distance(transform.position, other.transform.position);
-        if (distance <= attackDistanceStat.Value)
+        ColliderDistance2D distance2D = Physics2D.Distance(this.gameObject.GetComponent<Collider2D>(), other.GetComponent<Collider2D>());
+        if (! distance2D.isValid) return;
+
+        if (distance2D.distance <= attackDistanceStat.Value)
         {
             // Debug.LogFormat("[{0}] Hitting {1}", me.behavior, enemy.behavior);
             enemy.TakeDamage(_gameSettings.hitHealthDamage);
