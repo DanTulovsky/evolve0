@@ -28,7 +28,6 @@ public class GameManager : Singleton<GameManager>
         Dove
     };
 
-
     private void Start()
     {
         gameSettings = GetComponent<GameSettings>();
@@ -47,9 +46,6 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        // Allow changing behaviors
-
-
         foreach (GameObject i in inhabitants)
         {
             Bird bird = i.GetComponent<Bird>();

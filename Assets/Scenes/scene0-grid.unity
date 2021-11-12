@@ -3447,6 +3447,59 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!1 &1284843359 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1639925474728830599, guid: 8370da38aeb3d44ec87984f32693be3c, type: 3}
+  m_PrefabInstance: {fileID: 383166671}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1284843368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284843359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b98a6db0b653f764eac834f85857a9dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parentBlackboard: {fileID: 0}
+  _serializedBlackboard: '{"_variables":{}}'
+  _objectReferences: []
+  _serializedVariables: []
+--- !u!114 &1284843369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284843359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a7dbb6bbdf4ffb46ab7dd87ba8191e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serializedExposedParameters: []
+  _boundGraphSerialization: '{"type":"NodeCanvas.StateMachines.FSM","nodes":[{"_actionList":{"executionMode":1,"actions":[{"log":{"_value":"Wondering"},"secondsToRun":3.0,"$type":"NodeCanvas.Tasks.Actions.DebugLogText"}]},"_name":"Default","_position":{"x":360.0,"y":60.0},"_comment":"Default
+    state where the bird wonders around","$type":"NodeCanvas.StateMachines.ActionState","$id":"0"},{"_actionList":{"executionMode":1,"actions":[{"log":{"_value":"Fighting"},"$type":"NodeCanvas.Tasks.Actions.DebugLogText"}]},"_name":"Fight","_position":{"x":750.0,"y":195.0},"$type":"NodeCanvas.StateMachines.ActionState","$id":"1"},{"_actionList":{"executionMode":1,"actions":[{"log":{"_value":"Running
+    Away"},"$type":"NodeCanvas.Tasks.Actions.DebugLogText"}]},"_name":"RunAway","_position":{"x":645.0,"y":375.0},"_comment":"Bird
+    is running away","$type":"NodeCanvas.StateMachines.ActionState"}],"connections":[{"_condition":{"$type":"NodeCanvas.Tasks.Conditions.HaveSomeoneNearby"},"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
+  _boundGraphObjectReferences: []
+  _boundGraphSource:
+    _version: 3.21
+    _category: 
+    _comments: 
+    _translation: {x: 0, y: 0}
+    _zoomFactor: 1
+  _firstActivation: 0
+  _enableAction: 0
+  _disableAction: 0
+  _lockBoundGraphPrefabOverrides: 1
+  _preInitializeSubGraphs: 0
+  _updateMode: 0
+  _graph: {fileID: 0}
+  _blackboard: {fileID: 1284843368}
 --- !u!1 &1307499423
 GameObject:
   m_ObjectHideFlags: 0

@@ -101,6 +101,8 @@ public class Bird : MonoBehaviour
         }
     }
 
+    
+
     //Will execute the command and do stuff to the list to make the replay, undo, redo system work
     private static void ExecuteNewCommand(Command command)
     {
