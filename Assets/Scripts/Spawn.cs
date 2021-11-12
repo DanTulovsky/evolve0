@@ -63,13 +63,11 @@ public class Spawn : MonoBehaviour
             yield return new WaitForSeconds(delay);
         }
 
-        Debug.Log("done with initial spawn");
         _initialSpawn = false;
     }
 
     public void SpawnDove()
     {
-        Debug.Log("Spawning dove.");
         SpawnInhabitant(GameManager.Behavior.Dove);
     }
     public void SpawnHawk()
@@ -81,7 +79,6 @@ public class Spawn : MonoBehaviour
     {
         if (gameManager.inhabitants.Count < _gameSettings.maxInhabitants)
         {
-            Debug.LogFormat("received spawn request: {0}", behavior);
             GameObject i = SpawnBird(spawnPoint, behavior);
             gameManager.inhabitants.Add(i);
         }
