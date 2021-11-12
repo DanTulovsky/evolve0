@@ -3868,7 +3868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInhabitants: 100
-  initialInhabitants: 1
+  initialInhabitants: 0
   interactionDistance: 1
   spawnDelay: 6
   allowRandomSpawn: 0
@@ -3880,7 +3880,7 @@ MonoBehaviour:
   loseHealthImpact: 0
   timeWasteHealthImpact: -10
   hitHealthDamage: -5
-  enableReproduction: 1
+  enableReproduction: 0
   reproduceAtHealth: 1000
   reproduceInto: 2
   hawkSpeed: 1
@@ -10474,7 +10474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bed91033bb794eefaa9f3bafca15f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redPrefab: {fileID: 1639925474728830599, guid: 8370da38aeb3d44ec87984f32693be3c, type: 3}
+  birdPrefab: {fileID: 1639925474728830599, guid: 8370da38aeb3d44ec87984f32693be3c, type: 3}
   spawnPoint: {fileID: 2420243805528321647}
 --- !u!61 &2420243805528321651
 BoxCollider2D:

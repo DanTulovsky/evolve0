@@ -6,18 +6,13 @@ using Random = System.Random;
 
 public class Spawn : MonoBehaviour
 {
-    public GameObject redPrefab;
+    public GameObject birdPrefab;
     public Transform spawnPoint;
 
     private GameSettings _gameSettings;
     private GameManager gameManager;
     private bool _initialSpawn;
 
-    private readonly Dictionary<GameManager.Behavior, Color> _behaviorToColor = new Dictionary<GameManager.Behavior, Color>
-    {
-        [GameManager.Behavior.Dove] = Color.green,
-        [GameManager.Behavior.Hawk] = Color.red
-    };
 
     private void OnEnable()
     {
@@ -42,18 +37,6 @@ public class Spawn : MonoBehaviour
     private void Update()
     {
 
-        // foreach (GameObject i in GameManager.instance.reproduceInhabitants)
-        // {
-        //     Red red = i.GetComponent<Red>();
-        //
-        //     // Destroy the old
-        //     EventManager.TriggerEvent("destroy");
-        //
-        //     // Spawn two new ones of the same behavior
-        //     EventManager.TriggerEvent("spawnWithDelay", red.behavior);
-        // }
-        //
-        // GameManager.instance.reproduceInhabitants.Clear();
     }
 
     private void SpawnRandomInhabitant()
@@ -98,7 +81,8 @@ public class Spawn : MonoBehaviour
     {
         if (gameManager.inhabitants.Count < _gameSettings.maxInhabitants)
         {
-            GameObject i = SpawnRed(spawnPoint, behavior);
+            Debug.LogFormat("received spawn request: {0}", behavior);
+            GameObject i = SpawnBird(spawnPoint, behavior);
             gameManager.inhabitants.Add(i);
         }
         else
@@ -121,16 +105,22 @@ public class Spawn : MonoBehaviour
         }
     }
 
-    private GameObject SpawnRed(Transform parent, GameManager.Behavior behavior)
+    private GameObject SpawnBird(Transform parent, GameManager.Behavior behavior)
     {
-        GameObject i = Instantiate(redPrefab, parent.position, parent.rotation, parent);
+        GameObject i = Instantiate(birdPrefab, parent.position, parent.rotation, parent);
+        setDefaultStats(i, behavior);
 
-        Bird bird = i.GetComponent<Bird>();
+        return i;
+    }
+
+    public void setDefaultStats(GameObject go, GameManager.Behavior behavior)
+    {
+        Bird bird = go.GetComponent<Bird>();
         bird.behavior = behavior;
-        bird.GetComponent<SpriteRenderer>().color = _behaviorToColor[behavior];
-        i.name = $"{bird.behavior.ToString()}";
+        bird.GetComponent<SpriteRenderer>().color = GameManager.instance.behaviorToColor[behavior];
+        go.name = $"{bird.behavior.ToString()}";
 
-        switch (behavior)
+        switch (bird.behavior)
         {
             case GameManager.Behavior.Hawk:
                 bird.speedStat.BaseValue = _gameSettings.hawkSpeed;
@@ -141,7 +131,5 @@ public class Spawn : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException(nameof(behavior), behavior, null);
         }
-
-        return i;
     }
 }

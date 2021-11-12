@@ -12,8 +12,16 @@ public class GameManager : Singleton<GameManager>
     public TMP_Text hawksTextField;
     public TMP_Text dovesTextField;
 
-    public readonly List<GameObject> killedInhabitants = new();
-    public readonly List<GameObject> reproduceInhabitants = new();
+    private readonly List<GameObject> killedInhabitants = new();
+    private readonly List<GameObject> reproduceInhabitants = new();
+
+    public readonly List<GameObject> inhabitants = new();
+
+    public readonly Dictionary<GameManager.Behavior, Color> behaviorToColor = new()
+    {
+        [Behavior.Dove] = Color.green,
+        [Behavior.Hawk] = Color.red
+    };
 
     public enum Behavior
     {
@@ -21,18 +29,33 @@ public class GameManager : Singleton<GameManager>
         Dove
     };
 
-    public readonly List<GameObject> inhabitants = new();
 
     private void Start()
     {
         gameSettings = GetComponent<GameSettings>();
+
+        // Add any manually placed Birds to the list
+        // For debug only
+        var birds = FindObjectsOfType<Bird>();
+
+        foreach (Bird bird in birds)
+        {
+            bird.GetComponent<SpriteRenderer>().color = behaviorToColor[bird.behavior];
+            inhabitants.Add(bird.gameObject);
+            FindObjectOfType<Spawn>().setDefaultStats(bird.gameObject, bird.behavior);
+        }
     }
 
     private void Update()
     {
+        // Allow changing behaviors
+
+
         foreach (GameObject i in inhabitants)
         {
             Bird bird = i.GetComponent<Bird>();
+            bird.GetComponent<SpriteRenderer>().color = behaviorToColor[bird.behavior];
+
             if (bird.IsDead())
             {
                 killedInhabitants.Add(i);
