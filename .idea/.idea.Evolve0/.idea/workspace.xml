@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22071d5a-f245-4556-8d3d-3aecdf306323" name="Changes" comment="s/red/bird">
-      <change afterPath="$PROJECT_DIR$/Assets/_materials/bird.mat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_materials/bird.mat.meta" afterDir="false" />
+    <list default="true" id="22071d5a-f245-4556-8d3d-3aecdf306323" name="Changes" comment="fixes">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Evolve0/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Evolve0/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/scene0-grid.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/scene0-grid.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Spawn.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Spawn.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SpawnButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SpawnButton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_materials/red.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_materials/red.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +93,7 @@
       <workItem from="1636133023259" duration="2392000" />
       <workItem from="1636251726727" duration="1458000" />
       <workItem from="1636427294890" duration="5169000" />
-      <workItem from="1636600048322" duration="5298000" />
+      <workItem from="1636600048322" duration="5680000" />
     </task>
     <task id="LOCAL-00001" summary="Set destination to the thing being attacked.">
       <created>1635862831014</created>
@@ -264,7 +256,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636639685331</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="fixes">
+      <created>1636687261743</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1636687261743</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -294,7 +293,6 @@
     <MESSAGE value="more updates" />
     <MESSAGE value="attack" />
     <MESSAGE value="posturing" />
-    <MESSAGE value="fixes" />
     <MESSAGE value="cleanup and updates" />
     <MESSAGE value="more cleanup" />
     <MESSAGE value=".idea" />
@@ -306,6 +304,7 @@
     <MESSAGE value="destroy" />
     <MESSAGE value="many updates" />
     <MESSAGE value="s/red/bird" />
-    <option name="LAST_COMMIT_MESSAGE" value="s/red/bird" />
+    <MESSAGE value="fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixes" />
   </component>
 </project>
