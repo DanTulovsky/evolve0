@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 
@@ -34,11 +33,6 @@ public class Spawn : MonoBehaviour
         InvokeRepeating(nameof(SpawnRandomInhabitant), 3, _gameSettings.randomSpawnInterval);
     }
 
-    private void Update()
-    {
-
-    }
-
     private void SpawnRandomInhabitant()
     {
         if (_initialSpawn) return;
@@ -63,13 +57,11 @@ public class Spawn : MonoBehaviour
             yield return new WaitForSeconds(delay);
         }
 
-        Debug.Log("done with initial spawn");
         _initialSpawn = false;
     }
 
     public void SpawnDove()
     {
-        Debug.Log("Spawning dove.");
         SpawnInhabitant(GameManager.Behavior.Dove);
     }
     public void SpawnHawk()
@@ -81,7 +73,6 @@ public class Spawn : MonoBehaviour
     {
         if (gameManager.inhabitants.Count < _gameSettings.maxInhabitants)
         {
-            Debug.LogFormat("received spawn request: {0}", behavior);
             GameObject i = SpawnBird(spawnPoint, behavior);
             gameManager.inhabitants.Add(i);
         }
@@ -108,12 +99,12 @@ public class Spawn : MonoBehaviour
     private GameObject SpawnBird(Transform parent, GameManager.Behavior behavior)
     {
         GameObject i = Instantiate(birdPrefab, parent.position, parent.rotation, parent);
-        setDefaultStats(i, behavior);
+        SetDefaultStats(i, behavior);
 
         return i;
     }
 
-    public void setDefaultStats(GameObject go, GameManager.Behavior behavior)
+    public void SetDefaultStats(GameObject go, GameManager.Behavior behavior)
     {
         Bird bird = go.GetComponent<Bird>();
         bird.behavior = behavior;

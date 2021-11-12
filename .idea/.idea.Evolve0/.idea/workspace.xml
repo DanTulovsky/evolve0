@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22071d5a-f245-4556-8d3d-3aecdf306323" name="Changes" comment="fixes">
+    <list default="true" id="22071d5a-f245-4556-8d3d-3aecdf306323" name="Changes" comment="Cleanup">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Evolve0/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Evolve0/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/scene0-grid.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/scene0-grid.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Spawn.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Spawn.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,10 +68,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="45992">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="45992" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -93,7 +94,8 @@
       <workItem from="1636133023259" duration="2392000" />
       <workItem from="1636251726727" duration="1458000" />
       <workItem from="1636427294890" duration="5169000" />
-      <workItem from="1636600048322" duration="5680000" />
+      <workItem from="1636600048322" duration="5695000" />
+      <workItem from="1636688340497" duration="68000" />
     </task>
     <task id="LOCAL-00001" summary="Set destination to the thing being attacked.">
       <created>1635862831014</created>
@@ -263,7 +265,21 @@
       <option name="project" value="LOCAL" />
       <updated>1636687261743</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="more updates">
+      <created>1636687599712</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1636687599712</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Cleanup">
+      <created>1636688378643</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1636688378643</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -290,7 +306,6 @@
     <MESSAGE value="updates!" />
     <MESSAGE value="More updates" />
     <MESSAGE value="implement Command pattern (part 1) for movement." />
-    <MESSAGE value="more updates" />
     <MESSAGE value="attack" />
     <MESSAGE value="posturing" />
     <MESSAGE value="cleanup and updates" />
@@ -305,6 +320,8 @@
     <MESSAGE value="many updates" />
     <MESSAGE value="s/red/bird" />
     <MESSAGE value="fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixes" />
+    <MESSAGE value="more updates" />
+    <MESSAGE value="Cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleanup" />
   </component>
 </project>

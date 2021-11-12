@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -17,7 +16,7 @@ public class GameManager : Singleton<GameManager>
 
     public readonly List<GameObject> inhabitants = new();
 
-    public readonly Dictionary<GameManager.Behavior, Color> behaviorToColor = new()
+    public readonly Dictionary<Behavior, Color> behaviorToColor = new()
     {
         [Behavior.Dove] = Color.green,
         [Behavior.Hawk] = Color.red
@@ -42,7 +41,7 @@ public class GameManager : Singleton<GameManager>
         {
             bird.GetComponent<SpriteRenderer>().color = behaviorToColor[bird.behavior];
             inhabitants.Add(bird.gameObject);
-            FindObjectOfType<Spawn>().setDefaultStats(bird.gameObject, bird.behavior);
+            FindObjectOfType<Spawn>().SetDefaultStats(bird.gameObject, bird.behavior);
         }
     }
 
