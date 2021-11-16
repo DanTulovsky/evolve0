@@ -16,6 +16,10 @@ GameObject:
   - component: {fileID: 260521303}
   - component: {fileID: 1028668966021862362}
   - component: {fileID: 1488204903}
+  - component: {fileID: 1284843368}
+  - component: {fileID: 1284843369}
+  - component: {fileID: 1284843370}
+  - component: {fileID: -1241627004396271694}
   m_Layer: 3
   m_Name: bird
   m_TagString: bird
@@ -119,11 +123,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   behavior: 0
-  moveObject: {fileID: 0}
+  moveObject: {fileID: 1284843370}
+  fighterObject: {fileID: -1241627004396271694}
   speedStat:
     BaseValue: 3
   healthStat:
-    BaseValue: 0
+    BaseValue: 500
 --- !u!114 &237278472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,9 +170,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 0.5
+  radius: 0.9
   height: 2
-  canMove: 1
+  canMove: 0
   maxSpeed: 2
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
@@ -230,3 +235,83 @@ MonoBehaviour:
   version: 1
   unwrap: 1
   splitAtEveryPortal: 0
+--- !u!114 &1284843368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639925474728830599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b98a6db0b653f764eac834f85857a9dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parentBlackboard: {fileID: 0}
+  _serializedBlackboard: '{"_variables":{}}'
+  _objectReferences: []
+  _serializedVariables: []
+--- !u!114 &1284843369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639925474728830599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a7dbb6bbdf4ffb46ab7dd87ba8191e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serializedExposedParameters: []
+  _boundGraphSerialization: '{"type":"NodeCanvas.StateMachines.FSM","nodes":[{"_actionList":{"executionMode":1,"actions":[]},"_name":"Init","_position":{"x":630.0,"y":-60.0},"$type":"NodeCanvas.StateMachines.ActionState","$id":"0"},{"_actionList":{"executionMode":1,"actions":[{"log":{"_value":"Wondering"},"secondsToRun":3.0,"$type":"NodeCanvas.Tasks.Actions.DebugLogText"},{"method":{"_baseInfo":"Bird|Wonder|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_name":"Default","_position":{"x":750.0,"y":105.0},"_comment":"Default
+    state where the bird wonders around","$type":"NodeCanvas.StateMachines.ActionState","$id":"1"},{"_actionList":{"executionMode":1,"actions":[{"log":{"_value":"Fighting"},"$type":"NodeCanvas.Tasks.Actions.DebugLogText"},{"valueA":{"_name":"_fightTarget"},"valueB":{"_name":""},"$type":"NodeCanvas.Tasks.Actions.SetVariable`1[[UnityEngine.GameObject,
+    UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},{"log":{"_name":"_fightTarget"},"secondsToRun":5.0,"$type":"NodeCanvas.Tasks.Actions.DebugLogText"}]},"_name":"Fight","_position":{"x":990.0,"y":285.0},"$type":"NodeCanvas.StateMachines.ActionState","$id":"2"},{"_actionList":{"executionMode":1,"actions":[{"log":{"_value":"Running
+    Away"},"$type":"NodeCanvas.Tasks.Actions.DebugLogText"},{"functionWrapper":{"p1":{},"_targetMethod":{"_baseInfo":"Bird|RunAwayFrom|System.Void","_paramsInfo":"UnityEngine.GameObject"},"$type":"NodeCanvas.Framework.Internal.ReflectedAction`1[[UnityEngine.GameObject,
+    UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction"}]},"_name":"RunAway","_position":{"x":510.0,"y":420.0},"_comment":"Bird
+    is running away","$type":"NodeCanvas.StateMachines.ActionState","$id":"3"}],"connections":[{"_condition":{"method":{"_baseInfo":"Bird|Ready|System.Boolean","_paramsInfo":""},"parameters":[],"checkValue":{"_type":"System.Boolean","_value":{"$content":true,"$type":"System.Boolean"}},"$type":"NodeCanvas.Tasks.Conditions.CheckFunction_Multiplatform"},"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_condition":{"nearbyTarget":{},"$type":"NodeCanvas.Tasks.Conditions.HaveSomeoneNearby"},"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"3"},"$type":"NodeCanvas.StateMachines.FSMConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
+  _boundGraphObjectReferences: []
+  _boundGraphSource:
+    _version: 3.21
+    _category: 
+    _comments: 
+    _translation: {x: 18, y: 106}
+    _zoomFactor: 1
+  _firstActivation: 0
+  _enableAction: 0
+  _disableAction: 0
+  _lockBoundGraphPrefabOverrides: 1
+  _preInitializeSubGraphs: 0
+  _updateMode: 0
+  _graph: {fileID: 0}
+  _blackboard: {fileID: 1284843368}
+--- !u!114 &1284843370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639925474728830599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f21106c3dada493bac891424e0fb49d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stuckTime: 0
+--- !u!114 &-1241627004396271694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639925474728830599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6a873f5ff904f6d9bc90801d8a412d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runAway: 0
+  attackDistanceStat:
+    BaseValue: 0
+  postureDistanceStat:
+    BaseValue: 0

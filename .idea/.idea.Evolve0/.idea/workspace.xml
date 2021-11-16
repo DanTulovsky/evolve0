@@ -2,17 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22071d5a-f245-4556-8d3d-3aecdf306323" name="Changes" comment="Updates">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/_fsmConditions.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/_fsmConditions/HaveSomeoneNearby.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/_fsmConditions/HaveSomeoneNearby.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_fsms.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_fsms/bird_fsm.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_fsms/bird_fsm.asset.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Evolve0/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Evolve0/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj.DotSettings" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/scene0-grid.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/scene0-grid.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Bird.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bird.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FighterObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FighterObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/_fsmConditions/HaveSomeoneNearby.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/_fsmConditions/HaveSomeoneNearby.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_prefabs/bird.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_prefabs/bird.prefab" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,10 +74,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="27038">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="27038" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -106,7 +101,7 @@
       <workItem from="1636251726727" duration="1458000" />
       <workItem from="1636427294890" duration="5169000" />
       <workItem from="1636600048322" duration="5695000" />
-      <workItem from="1636688340497" duration="2451000" />
+      <workItem from="1636688340497" duration="6036000" />
     </task>
     <task id="LOCAL-00001" summary="Set destination to the thing being attacked.">
       <created>1635862831014</created>
@@ -297,7 +292,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636688449142</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Updates">
+      <created>1636744035927</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1636744035927</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -342,5 +344,24 @@
     <MESSAGE value="Cleanup" />
     <MESSAGE value="Updates" />
     <option name="LAST_COMMIT_MESSAGE" value="Updates" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Spawn.cs</url>
+          <line>100</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Spawn.cs" initialLine="100" containingFunctionPresentation="method 'SpawnBird'">
+            <startOffsets>
+              <option value="2890" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2971" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

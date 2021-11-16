@@ -17,10 +17,12 @@ public class Bird : MonoBehaviour
 
     // Allows this object to move in the world
     public MoveObject moveObject;
-    private FighterObject fighterObject;
+    public FighterObject fighterObject;
 
     public CharacterStat speedStat;
     public CharacterStat healthStat;
+
+    private bool ready;
 
     private Command setDestination;
     private Command stop;
@@ -38,27 +40,32 @@ public class Bird : MonoBehaviour
 
         _gameSettings = GameManager.instance.gameSettings;
         _ai = GetComponent<AIPath>();
-        moveObject = gameObject.AddComponent<MoveObject>();
-        fighterObject = gameObject.AddComponent<FighterObject>();
+        // moveObject = gameObject.AddComponent<MoveObject>();
+        // fighterObject = gameObject.AddComponent<FighterObject>();
         healthStat.BaseValue = _gameSettings.baseHealth;
+    }
+
+    private void Start()
+    {
+        ready = true;
     }
 
     private void OnEnable()
     {
-       EventManager.StartListening("buttonPressed", buttonPressedListener);
-       EventManager.StartListening("buttonPressed", buttonPressedListenerString);
+        EventManager.StartListening("buttonPressed", buttonPressedListener);
+        EventManager.StartListening("buttonPressed", buttonPressedListenerString);
     }
 
     private void OnDisable()
     {
-       EventManager.StopListening("buttonPressed", buttonPressedListener);
-       EventManager.StopListening("buttonPressed", buttonPressedListenerString);
+        EventManager.StopListening("buttonPressed", buttonPressedListener);
+        EventManager.StopListening("buttonPressed", buttonPressedListenerString);
     }
 
     private void OnDestroy()
     {
-       EventManager.StopListening("buttonPressed", buttonPressedListener);
-       EventManager.StopListening("buttonPressed", buttonPressedListenerString);
+        EventManager.StopListening("buttonPressed", buttonPressedListener);
+        EventManager.StopListening("buttonPressed", buttonPressedListenerString);
     }
 
     private void ButtonPressedHandler()
@@ -75,33 +82,43 @@ public class Bird : MonoBehaviour
     {
         _ai.maxSpeed = speedStat.Value;
 
-        var nearBy = GetNearby();
-
-        if (nearBy.Count > 0)
-        {
-            // Focus on one enemy
-            GameObject randomEnemy = nearBy[Random.Range(0, nearBy.Count - 1)].gameObject;
-
-            switch (behavior)
-            {
-                case GameManager.Behavior.Dove:
-                    DoveHandler(randomEnemy);
-                    break;
-                case GameManager.Behavior.Hawk:
-                    HawkHandler(randomEnemy);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-        else
-        {
-            ExecuteNewCommand(new GoCommand(moveObject));
-            _runningAway = false;
-        }
+        // var nearBy = GetNearby();
+        //
+        // if (nearBy.Count > 0)
+        // {
+        //     // Focus on one enemy
+        //     GameObject randomEnemy = nearBy[Random.Range(0, nearBy.Count - 1)].gameObject;
+        //
+        //     switch (behavior)
+        //     {
+        //         case GameManager.Behavior.Dove:
+        //             DoveHandler(randomEnemy);
+        //             break;
+        //         case GameManager.Behavior.Hawk:
+        //             HawkHandler(randomEnemy);
+        //             break;
+        //         default:
+        //             throw new ArgumentOutOfRangeException();
+        //     }
+        // }
+        // else
+        // {
+        //     Wonder();
+        // }
     }
 
-    
+
+    public bool Ready()
+    {
+        // when true, fsm can start
+        return ready;
+    }
+
+    public void Wonder()
+    {
+        ExecuteNewCommand(new GoCommand(moveObject));
+        _runningAway = false;
+    }
 
     //Will execute the command and do stuff to the list to make the replay, undo, redo system work
     private static void ExecuteNewCommand(Command command)
@@ -115,7 +132,7 @@ public class Bird : MonoBehaviour
         // redoCommands.Clear();
     }
 
-    private List<Collider2D> GetNearby()
+    public List<Collider2D> GetNearby()
     {
         // Check for collisions
         Collider2D selfCollider = GetComponent<Collider2D>();
@@ -142,7 +159,9 @@ public class Bird : MonoBehaviour
                 if (healthStat.Value <= _gameSettings.runAwayAtHealth)
                 {
                     // Keep attacking the same target if you have one
-                    RunAwayFrom(fighterObject.CurrentAttackTarget() != null ? fighterObject.CurrentAttackTarget() : other);
+                    RunAwayFrom(fighterObject.CurrentAttackTarget() != null
+                        ? fighterObject.CurrentAttackTarget()
+                        : other);
                 }
                 else
                 {
@@ -213,7 +232,7 @@ public class Bird : MonoBehaviour
         ExecuteNewCommand(new AttackCommand(fighterObject, other));
     }
 
-    private void RunAwayFrom(GameObject other)
+    public void RunAwayFrom(GameObject other)
     {
         if (_runningAway) return;
 

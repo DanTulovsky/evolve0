@@ -151,9 +151,9 @@ public class FighterObject : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(gameObject.transform.position, _gameSettings.interactionDistance);
-    }
+    // private void OnDrawGizmosSelected()
+    // {
+    //     Gizmos.color = Color.yellow;
+    //     Gizmos.DrawWireSphere(gameObject.transform.position, _gameSettings.interactionDistance);
+    // }
 }
